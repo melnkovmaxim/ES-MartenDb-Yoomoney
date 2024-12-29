@@ -1,6 +1,19 @@
 using ES.Yoomoney.Admin.Web.Components;
+using ES.Yoomoney.Application.Extensions;
+using ES.Yoomoney.Infrastructure.Clients.Extensions;
+using ES.Yoomoney.Infrastructure.Persistence.Extensions;
+using ES.Yoomoney.Infrastructure.Workers.Extensions;
+using ES.Yoomoney.ServiceDefaults;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddServiceDefaults();
+builder.AddNpgsqlDataSource("postgresdb");
+builder.Services
+    .AddLayerApplication()
+    .AddLayerInfrastructurePersistence()
+    .AddLayerInfrastructureWorkers()
+    .AddLayerInfrastructureClients();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

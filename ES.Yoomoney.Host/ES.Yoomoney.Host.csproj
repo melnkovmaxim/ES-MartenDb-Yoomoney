@@ -17,6 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\ES.Yoomoney.Admin.Web\ES.Yoomoney.Admin.Web.csproj" />
       <ProjectReference Include="..\ES.Yoomoney.Api\ES.Yoomoney.Api.csproj" />
     </ItemGroup>
 

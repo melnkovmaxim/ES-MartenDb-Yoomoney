@@ -1,7 +1,27 @@
 ﻿@page "/"
+@using ES.Yoomoney.Core.Abstractions
+@using ES.Yoomoney.Core.Projections
 
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
+
+<p>AccountId: @_projection.AccountId</p>
+<p>Amount: @_projection.Amount</p>
+<p>Version: @_projection.Version</p>
+<p>EventsCount: @_projection.EventsCount</p>
+
+@code {
+    [Inject] private IEsUnitOfWork unitOfWork { get; set; }
+
+    private BalanceProjection _projection;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var data = await unitOfWork.CreateEventStore().GetProjectionAndCreateSnapshotAsync<BalanceProjection>(Guid.Parse("d48f6448-3fe4-4898-91ce-db79b5f57c9a"), CancellationToken.None);
+
+        _projection = data.Value;
+    }
+}

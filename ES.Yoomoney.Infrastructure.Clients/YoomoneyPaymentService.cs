@@ -33,16 +33,6 @@ namespace ES.Yoomoney.Application.PaymentServices
             return Task.FromResult(result);
         }
 
-        public Task<IReadOnlyCollection<Payment>> FetchUnprocessedPaymentsAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task MarkPaymentsAsProcessedAsync(IEnumerable<string> paymentIds)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<IReadOnlyCollection<Payment>> FetchPaymentsForCaptureAsync()
         {
             var filter = new PaymentFilter()
@@ -59,7 +49,7 @@ namespace ES.Yoomoney.Application.PaymentServices
             return Task.FromResult(payments as IReadOnlyCollection<Payment>);
         }
 
-        public Task CapturePaymentsAsync(IEnumerable<string> paymentIds)
+        public Task CapturePaymentsAsync(params IEnumerable<string> paymentIds)
         {
             foreach (var paymentId in paymentIds) 
             {

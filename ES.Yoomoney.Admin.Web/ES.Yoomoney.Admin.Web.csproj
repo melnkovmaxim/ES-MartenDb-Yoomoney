@@ -7,11 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\ES.Yoomoney.Api\ES.Yoomoney.Api.csproj" />
       <ProjectReference Include="..\ES.Yoomoney.Application\ES.Yoomoney.Application.csproj" />
       <ProjectReference Include="..\ES.Yoomoney.Core\ES.Yoomoney.Core.csproj" />
+      <ProjectReference Include="..\ES.Yoomoney.Infrastructure.Clients\ES.Yoomoney.Infrastructure.Clients.csproj" />
       <ProjectReference Include="..\ES.Yoomoney.Infrastructure.Messaging\ES.Yoomoney.Infrastructure.Messaging.csproj" />
       <ProjectReference Include="..\ES.Yoomoney.Infrastructure.Persistence\ES.Yoomoney.Infrastructure.Persistence.csproj" />
       <ProjectReference Include="..\ES.Yoomoney.Infrastructure.Workers\ES.Yoomoney.Infrastructure.Workers.csproj" />
+      <ProjectReference Include="..\ES.Yoomoney.ServiceDefaults\ES.Yoomoney.ServiceDefaults.csproj" />
     </ItemGroup>
 
 </Project>

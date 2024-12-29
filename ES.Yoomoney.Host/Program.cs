@@ -8,7 +8,12 @@ var postgresInstance = builder
     .AddDatabase("postgresdb", "postgres");
 
 _ = builder
-    .AddProject<ES_Yoomoney_Api>("esyoomoneyapi")
+    .AddProject<ES_Yoomoney_Api>("EsYoomoneyApi")
+    .WithReference(postgresInstance)
+    .WaitFor(postgresInstance);
+
+_ = builder
+    .AddProject<ES_Yoomoney_Admin_Web>("EsYoomoneyAdminWeb")
     .WithReference(postgresInstance)
     .WaitFor(postgresInstance);
 

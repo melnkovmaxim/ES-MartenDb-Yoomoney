@@ -5,7 +5,7 @@ namespace ES.Yoomoney.Core.Abstractions
     public interface IPaymentService
     {
         Task<(string PaymentId, string ConfirmationUrl)> CreatePaymentAsync(decimal amount);
-        Task<IReadOnlyCollection<Payment>> FetchUnprocessedPaymentsAsync();
-        Task MarkPaymentsAsProcessedAsync(IEnumerable<string> paymentIds);
+        Task<IReadOnlyCollection<Payment>> FetchPaymentsForCaptureAsync();
+        Task CapturePaymentsAsync(params IEnumerable<string> paymentIds);
     }
 }

@@ -1,6 +1,12 @@
 @Yoomoney_HostAddress = http://localhost:5068
 
-GET {{Yoomoney_HostAddress}}/payment/
+POST {{Yoomoney_HostAddress}}/payments
 Accept: application/json
+Content-Type: application/json
+
+{
+  "AccountId": "d48f6448-3fe4-4898-91ce-db79b5f57c9a",
+  "Amount": 100.50
+}
 
 ###

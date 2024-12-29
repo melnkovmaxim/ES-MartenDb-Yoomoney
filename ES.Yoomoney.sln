@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Tests.Unit", "E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Tests.Integration", "ES.Yoomoney.Tests.Integration\ES.Yoomoney.Tests.Integration.csproj", "{4CCF9CC0-CBB9-4D66-997B-F6FDE42CE178}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Infrastructure.Clients", "ES.Yoomoney.Infrastructure.Clients\ES.Yoomoney.Infrastructure.Clients.csproj", "{CDDD09C2-403B-4376-8DB7-20D3ADE41386}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,10 @@ Global
 		{4CCF9CC0-CBB9-4D66-997B-F6FDE42CE178}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CCF9CC0-CBB9-4D66-997B-F6FDE42CE178}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4CCF9CC0-CBB9-4D66-997B-F6FDE42CE178}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDDD09C2-403B-4376-8DB7-20D3ADE41386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDDD09C2-403B-4376-8DB7-20D3ADE41386}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDDD09C2-403B-4376-8DB7-20D3ADE41386}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDDD09C2-403B-4376-8DB7-20D3ADE41386}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9561AD15-3C70-47F2-B07F-74141C844159} = {B634CB2C-FDEC-44CB-8E6A-F99EB08C5D9E}
@@ -88,5 +94,6 @@ Global
 		{A22971AA-623F-419A-B5D1-6D0C9217D013} = {B634CB2C-FDEC-44CB-8E6A-F99EB08C5D9E}
 		{37E62BCD-D199-49F5-AD28-D03E9A8BE47F} = {6B41DB89-4764-427C-89A5-90F793924442}
 		{4CCF9CC0-CBB9-4D66-997B-F6FDE42CE178} = {6B41DB89-4764-427C-89A5-90F793924442}
+		{CDDD09C2-403B-4376-8DB7-20D3ADE41386} = {B634CB2C-FDEC-44CB-8E6A-F99EB08C5D9E}
 	EndGlobalSection
 EndGlobal

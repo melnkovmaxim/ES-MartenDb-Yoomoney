@@ -1,30 +1,27 @@
-﻿using ES.Yoomoney.Core.DomainEvents;
+﻿using ES.Yoomoney.Core.Abstractions;
+using ES.Yoomoney.Core.DomainEvents;
 using ES.Yoomoney.Core.OperationResult;
 using ES.Yoomoney.Core.Projections;
 using Marten;
+using IEventStore = Marten.Events.IEventStore;
 
 namespace ES.Yoomoney.Infrastructure.Persistence;
 
-public class EventStore(IDocumentSession session): IAsyncDisposable
+public sealed class EventStore(IDocumentSession session): IEsEventStore, IAsyncDisposable
 {
-
-    public async Task SaveEventsAsync<TEvent>(
-        bool isExclusiveLock = false,
-        params IReadOnlyCollection<TEvent> events)
+    public async Task AddEventAsync<TEvent>(
+        TEvent @event,
+        bool isExclusiveLock = false)
         where TEvent: IDomainEvent
     {
-        var streamId = ValidateAndGetStreamId(events);
-
         if (isExclusiveLock)
         {
-            await session.Events.AppendExclusive(streamId, events);
+            await session.Events.AppendExclusive(@event.StreamId, @event);
         }
         else
         {
-            session.Events.Append(streamId, events);
+            session.Events.Append(@event.StreamId, @event);
         }
-
-        await session.SaveChangesAsync();
     }
     
     public async Task<Result<TProjection>> GetProjectionAndCreateSnapshotAsync<TProjection>(Guid streamId, CancellationToken ct)

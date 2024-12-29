@@ -10,15 +10,11 @@ public sealed record BalanceProjection() : IApplicationProjection
     public long Version { get; init; }
     public int EventsCount { get; init; }
 
-    public BalanceProjection(Payment payment) : this()
+    public BalanceProjection(AccountBalanceInitializedEvent @event) : this()
     {
-        if (payment.Paid == false)
-        {
-            throw new Exception("Is not paid");
-        }
-
-        AccountId = FetchPaymentsWorker.UserId;
-        Amount = payment.Amount.Value;
+        AccountId = @event.StreamId;
+        Version = 1;
+        EventsCount = 1;
     }
 
     public BalanceProjection Apply(DebitBalanceDomainEvent @event)
@@ -29,6 +25,11 @@ public sealed record BalanceProjection() : IApplicationProjection
             EventsCount = EventsCount + 1,
             Version = Version + 1
         };
+    }
+    
+    public BalanceProjection Apply(AccountBalanceInitializedEvent @event)
+    {
+        return this;
     }
 
     public BalanceProjection Apply(TopupBalanceDomainEvent @event)

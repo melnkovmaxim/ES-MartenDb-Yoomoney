@@ -7,8 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
-      <PackageReference Include="Yandex.Checkout.V3" Version="4.2.0" />
+      <ProjectReference Include="..\ES.Yoomoney.Application\ES.Yoomoney.Application.csproj" />
+      <ProjectReference Include="..\ES.Yoomoney.Core\ES.Yoomoney.Core.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,28 +1,37 @@
 ﻿using System.Collections.Concurrent;
+using ES.Yoomoney.Core.Abstractions;
 using Marten;
+using Marten.Services;
 
-namespace ES.Yoomoney.Infrastructure.Persistence
+namespace ES.Yoomoney.Infrastructure.Persistence;
+
+public sealed class UnitOfWork(IDocumentStore store): IEsUnitOfWork
 {
-    public class UnitOfWork(IDocumentStore store)
+    private readonly ConcurrentDictionary<EventStore, IDocumentSession> _sessions = new();
+
+    public IEsEventStore CreateEventStore()
+        => CreateEventStore(store.LightweightSession());
+
+    public async Task<IEsEventStore> CreateSerializableEventStoreAsync()
+        => CreateEventStore(await store.LightweightSerializableSessionAsync());
+
+    public async Task CommitAsync()
     {
-        private readonly ConcurrentDictionary<EventStore, IDocumentSession> _sessions = new();
-
-        public EventStore CreateEventStore()
-            => CreateEventStore(store.LightweightSession());
-
-        public async Task<EventStore> CreateSerializableEventStoreAsync()
-            => CreateEventStore(await store.LightweightSerializableSessionAsync());
-
-        private EventStore CreateEventStore(IDocumentSession session)
+        foreach (var pair in _sessions)
         {
-            var eventStore = new EventStore(session);
-
-            if (!_sessions.TryAdd(eventStore, session))
-            {
-                throw new Exception("Event store key already exists in session dictionary");
-            }
-
-            return eventStore;
+            await pair.Value.SaveChangesAsync(CancellationToken.None);
         }
+    }
+
+    private EventStore CreateEventStore(IDocumentSession session)
+    {
+        var eventStore = new EventStore(session);
+
+        if (!_sessions.TryAdd(eventStore, session))
+        {
+            throw new Exception("Event store key already exists in session dictionary");
+        }
+
+        return eventStore;
     }
 }
