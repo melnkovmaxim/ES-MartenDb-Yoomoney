@@ -1,0 +1,6 @@
+@Yoomoney_HostAddress = http://localhost:5068
+
+GET {{Yoomoney_HostAddress}}/payment/
+Accept: application/json
+
+###

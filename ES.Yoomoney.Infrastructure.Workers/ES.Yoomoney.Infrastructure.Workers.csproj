@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ES.Yoomoney.Application\ES.Yoomoney.Application.csproj" />
+      <ProjectReference Include="..\ES.Yoomoney.Core\ES.Yoomoney.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Marten" Version="7.34.0" />
+      <PackageReference Include="Yandex.Checkout.V3" Version="4.2.0" />
+    </ItemGroup>
+
+</Project>
