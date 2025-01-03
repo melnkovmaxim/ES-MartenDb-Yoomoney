@@ -7,17 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\ES.Yoomoney.Application\ES.Yoomoney.Application.csproj" />
       <ProjectReference Include="..\ES.Yoomoney.Core\ES.Yoomoney.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="KafkaFlow.Abstractions" Version="3.0.10" />
-      <PackageReference Include="MediatR" Version="12.4.1" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Features\DomainEvents\" />
-      <Folder Include="Features\Queries\" />
+      <PackageReference Include="FluentAssertions" Version="7.0.0" />
+      <PackageReference Include="Marten" Version="7.34.0" />
     </ItemGroup>
 
 </Project>

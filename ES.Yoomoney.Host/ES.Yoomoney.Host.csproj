@@ -13,11 +13,12 @@
 
     <ItemGroup>
         <PackageReference Include="Aspire.Hosting.AppHost" Version="9.0.0"/>
+        <PackageReference Include="Aspire.Hosting.Kafka" Version="9.0.0" />
         <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="9.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ES.Yoomoney.Admin.Web\ES.Yoomoney.Admin.Web.csproj" />
+      <ProjectReference Include="..\ES.Yoomoney.AdminPanel\ES.Yoomoney.AdminPanel\ES.Yoomoney.AdminPanel.csproj" />
       <ProjectReference Include="..\ES.Yoomoney.Api\ES.Yoomoney.Api.csproj" />
     </ItemGroup>
 

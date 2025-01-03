@@ -10,7 +10,7 @@ public sealed record BalanceProjection() : IApplicationProjection
     public long Version { get; init; }
     public int EventsCount { get; init; }
 
-    public BalanceProjection(AccountBalanceInitializedEvent @event) : this()
+    public BalanceProjection(AccountBalanceInitializedEvent @event): this()
     {
         AccountId = @event.StreamId;
         Version = 1;
@@ -25,11 +25,6 @@ public sealed record BalanceProjection() : IApplicationProjection
             EventsCount = EventsCount + 1,
             Version = Version + 1
         };
-    }
-    
-    public BalanceProjection Apply(AccountBalanceInitializedEvent @event)
-    {
-        return this;
     }
 
     public BalanceProjection Apply(TopupBalanceDomainEvent @event)

@@ -18,7 +18,7 @@ public sealed class PaymentsPaidProcessingWorker(IServiceProvider sp): Backgroun
         while (!ct.IsCancellationRequested)
         {
             var capturedPayments = await paymentService.FetchPaymentsForCaptureAsync();
-            var paymentPaidEvent = new PaymentPaidIntegrationEvent(capturedPayments);
+            var paymentPaidEvent = new PaymentReceivedIntegrationEvent(capturedPayments);
 
             await publisher.Publish(paymentPaidEvent, ct);
             

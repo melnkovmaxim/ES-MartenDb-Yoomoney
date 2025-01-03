@@ -12,13 +12,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Core", "ES.Yoom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Infrastructure.Messaging", "ES.Yoomoney.Infrastructure.Messaging\ES.Yoomoney.Infrastructure.Messaging.csproj", "{9561AD15-3C70-47F2-B07F-74141C844159}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Infrastructure.Persistence", "ES.Yoomoney.Infrastructure.Persistence\ES.Yoomoney.Infrastructure.Persistence.csproj", "{43D51FC1-A22F-453E-A3B4-8B9F2E0DEBCA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Infrastructure.Persistence.EventSourcing", "ES.Yoomoney.Infrastructure.Persistence.EventSourcing\ES.Yoomoney.Infrastructure.Persistence.EventSourcing.csproj", "{43D51FC1-A22F-453E-A3B4-8B9F2E0DEBCA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{B634CB2C-FDEC-44CB-8E6A-F99EB08C5D9E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Aspire", "Aspire", "{E09DE28A-44C0-49EF-B7D8-A783B7809EF2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Admin.Web", "ES.Yoomoney.Admin.Web\ES.Yoomoney.Admin.Web.csproj", "{273DE20D-BC46-40B4-A8BA-F79F5F998CC0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Infrastructure.Workers", "ES.Yoomoney.Infrastructure.Workers\ES.Yoomoney.Infrastructure.Workers.csproj", "{A22971AA-623F-419A-B5D1-6D0C9217D013}"
 EndProject
@@ -29,6 +27,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Tests.Integration", "ES.Yoomoney.Tests.Integration\ES.Yoomoney.Tests.Integration.csproj", "{4CCF9CC0-CBB9-4D66-997B-F6FDE42CE178}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Infrastructure.Clients", "ES.Yoomoney.Infrastructure.Clients\ES.Yoomoney.Infrastructure.Clients.csproj", "{CDDD09C2-403B-4376-8DB7-20D3ADE41386}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Infrastructure.Persistence.PostgreSql", "ES.Yoomoney.Infrastructure.Persistence.PostgreSql\ES.Yoomoney.Infrastructure.Persistence.PostgreSql.csproj", "{7BAF63FF-1B14-47D6-9881-8FACAD1C30A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.AdminPanel", "ES.Yoomoney.AdminPanel\ES.Yoomoney.AdminPanel\ES.Yoomoney.AdminPanel.csproj", "{3561A0E1-56CE-4575-A0CC-D78EEFB73F5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.AdminPanel.Client", "ES.Yoomoney.AdminPanel\ES.Yoomoney.AdminPanel.Client\ES.Yoomoney.AdminPanel.Client.csproj", "{3F119BB6-D46F-4A09-8E9B-C23877AE97EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,10 +68,6 @@ Global
 		{43D51FC1-A22F-453E-A3B4-8B9F2E0DEBCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43D51FC1-A22F-453E-A3B4-8B9F2E0DEBCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43D51FC1-A22F-453E-A3B4-8B9F2E0DEBCA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{273DE20D-BC46-40B4-A8BA-F79F5F998CC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{273DE20D-BC46-40B4-A8BA-F79F5F998CC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{273DE20D-BC46-40B4-A8BA-F79F5F998CC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{273DE20D-BC46-40B4-A8BA-F79F5F998CC0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A22971AA-623F-419A-B5D1-6D0C9217D013}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A22971AA-623F-419A-B5D1-6D0C9217D013}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A22971AA-623F-419A-B5D1-6D0C9217D013}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -84,16 +84,30 @@ Global
 		{CDDD09C2-403B-4376-8DB7-20D3ADE41386}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDDD09C2-403B-4376-8DB7-20D3ADE41386}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDDD09C2-403B-4376-8DB7-20D3ADE41386}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BAF63FF-1B14-47D6-9881-8FACAD1C30A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BAF63FF-1B14-47D6-9881-8FACAD1C30A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BAF63FF-1B14-47D6-9881-8FACAD1C30A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BAF63FF-1B14-47D6-9881-8FACAD1C30A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3561A0E1-56CE-4575-A0CC-D78EEFB73F5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3561A0E1-56CE-4575-A0CC-D78EEFB73F5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3561A0E1-56CE-4575-A0CC-D78EEFB73F5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3561A0E1-56CE-4575-A0CC-D78EEFB73F5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F119BB6-D46F-4A09-8E9B-C23877AE97EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F119BB6-D46F-4A09-8E9B-C23877AE97EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F119BB6-D46F-4A09-8E9B-C23877AE97EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F119BB6-D46F-4A09-8E9B-C23877AE97EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9561AD15-3C70-47F2-B07F-74141C844159} = {B634CB2C-FDEC-44CB-8E6A-F99EB08C5D9E}
 		{43D51FC1-A22F-453E-A3B4-8B9F2E0DEBCA} = {B634CB2C-FDEC-44CB-8E6A-F99EB08C5D9E}
 		{68D56559-E38C-420E-8E2C-1191CE3CD10F} = {E09DE28A-44C0-49EF-B7D8-A783B7809EF2}
 		{AB8F374A-7494-4E12-A208-B927DB2763A7} = {E09DE28A-44C0-49EF-B7D8-A783B7809EF2}
-		{273DE20D-BC46-40B4-A8BA-F79F5F998CC0} = {E09DE28A-44C0-49EF-B7D8-A783B7809EF2}
 		{A22971AA-623F-419A-B5D1-6D0C9217D013} = {B634CB2C-FDEC-44CB-8E6A-F99EB08C5D9E}
 		{37E62BCD-D199-49F5-AD28-D03E9A8BE47F} = {6B41DB89-4764-427C-89A5-90F793924442}
 		{4CCF9CC0-CBB9-4D66-997B-F6FDE42CE178} = {6B41DB89-4764-427C-89A5-90F793924442}
 		{CDDD09C2-403B-4376-8DB7-20D3ADE41386} = {B634CB2C-FDEC-44CB-8E6A-F99EB08C5D9E}
+		{7BAF63FF-1B14-47D6-9881-8FACAD1C30A6} = {B634CB2C-FDEC-44CB-8E6A-F99EB08C5D9E}
+		{3561A0E1-56CE-4575-A0CC-D78EEFB73F5A} = {E09DE28A-44C0-49EF-B7D8-A783B7809EF2}
+		{3F119BB6-D46F-4A09-8E9B-C23877AE97EA} = {E09DE28A-44C0-49EF-B7D8-A783B7809EF2}
 	EndGlobalSection
 EndGlobal

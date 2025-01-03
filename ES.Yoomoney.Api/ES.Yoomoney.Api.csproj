@@ -21,9 +21,14 @@
       <ProjectReference Include="..\ES.Yoomoney.Core\ES.Yoomoney.Core.csproj" />
       <ProjectReference Include="..\ES.Yoomoney.Infrastructure.Clients\ES.Yoomoney.Infrastructure.Clients.csproj" />
       <ProjectReference Include="..\ES.Yoomoney.Infrastructure.Messaging\ES.Yoomoney.Infrastructure.Messaging.csproj" />
-      <ProjectReference Include="..\ES.Yoomoney.Infrastructure.Persistence\ES.Yoomoney.Infrastructure.Persistence.csproj" />
+      <ProjectReference Include="..\ES.Yoomoney.Infrastructure.Persistence.EventSourcing\ES.Yoomoney.Infrastructure.Persistence.EventSourcing.csproj" />
+      <ProjectReference Include="..\ES.Yoomoney.Infrastructure.Persistence.PostgreSql\ES.Yoomoney.Infrastructure.Persistence.PostgreSql.csproj" />
       <ProjectReference Include="..\ES.Yoomoney.Infrastructure.Workers\ES.Yoomoney.Infrastructure.Workers.csproj" />
       <ProjectReference Include="..\ES.Yoomoney.ServiceDefaults\ES.Yoomoney.ServiceDefaults.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <InternalsVisibleTo Include="ES.Yoomoney.Tests.Integration" />
     </ItemGroup>
 
 </Project>

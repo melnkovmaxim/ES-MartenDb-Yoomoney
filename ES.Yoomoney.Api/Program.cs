@@ -2,7 +2,8 @@ using ES.Yoomoney.Api;
 using ES.Yoomoney.Api.Extensions;
 using ES.Yoomoney.Application.Extensions;
 using ES.Yoomoney.Infrastructure.Clients.Extensions;
-using ES.Yoomoney.Infrastructure.Persistence.Extensions;
+using ES.Yoomoney.Infrastructure.Messaging.Extensions;
+using ES.Yoomoney.Infrastructure.Persistence.EventSourcing.Extensions;
 using ES.Yoomoney.Infrastructure.Workers.Extensions;
 using ES.Yoomoney.ServiceDefaults;
 using Scalar.AspNetCore;
@@ -17,9 +18,10 @@ builder.Services.AddEndpoints(CurrentAssembly.Reference);
 
 builder.Services
     .AddLayerApplication()
-    .AddLayerInfrastructurePersistence()
+    .AddLayerInfrastructurePersistenceEventSourcing()
     .AddLayerInfrastructureWorkers()
-    .AddLayerInfrastructureClients();
+    .AddLayerInfrastructureClients()
+    .AddInfrastructureMessagingLayer();
 
 var app = builder.Build();
 
@@ -34,3 +36,9 @@ app.UseHttpsRedirection();
 app.MapApplicationEndpoints();
 
 app.Run();
+
+#pragma warning disable CA1050 // Declare types in namespaces
+public partial class Program
+{
+}
+#pragma warning restore CA1050 // Declare types in namespaces
