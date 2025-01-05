@@ -1,25 +1,28 @@
+using Confluent.Kafka;
 using ES.Yoomoney.AdminPanel.Client.Pages;
 using ES.Yoomoney.AdminPanel.Components;
+using ES.Yoomoney.Application.Extensions;
+using ES.Yoomoney.Infrastructure.Clients.Extensions;
+using ES.Yoomoney.Infrastructure.Messaging.Extensions;
+using ES.Yoomoney.Infrastructure.Persistence.EventSourcing.Extensions;
+using KafkaFlow.Serializer;
+using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // https://www.youtube.com/watch?v=O7oaxFgNuYo
-// builder.Services.AddSingleton<IProducer<string, string>>(new ProducerBuilder<string, string>(new ProducerConfig()
-// //     {
-// //         BootstrapServers = "kafka:9092",
-// //         Acks = Acks.All,
-// //         MessageTimeoutMs = 5000
-// //     })
-// //     .Build());
-// //
-// // builder.Services
-// //     .AddLayerApplication()
-// //     .AddLayerInfrastructureClients()
-// //     .AddLayerInfrastructurePersistenceEventSourcing()
-// //     .AddInfrastructureMessagingLayer();
-// 
-// // Add services to the container.
+builder.AddKafkaProducer<Null, string>("kafka");
+
+builder.Services
+    .AddLayerApplication()
+    .AddLayerInfrastructureClients()
+    .AddLayerInfrastructurePersistenceEventSourcing()
+    .AddInfrastructureMessagingLayer(builder.Configuration);
+
+// Add services to the container.
+// Add services to the container.
 builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
 var app = builder.Build();
@@ -43,6 +46,7 @@ app.UseAntiforgery();
 
 app.MapStaticAssets();
 app.MapRazorComponents<App>()
+    .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(ES.Yoomoney.AdminPanel.Client._Imports).Assembly);
 

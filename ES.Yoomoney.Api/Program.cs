@@ -21,7 +21,7 @@ builder.Services
     .AddLayerInfrastructurePersistenceEventSourcing()
     .AddLayerInfrastructureWorkers()
     .AddLayerInfrastructureClients()
-    .AddInfrastructureMessagingLayer();
+    .AddInfrastructureMessagingLayer(builder.Configuration);
 
 var app = builder.Build();
 

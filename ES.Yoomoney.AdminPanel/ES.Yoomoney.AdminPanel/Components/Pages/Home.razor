@@ -1,7 +1,48 @@
 ﻿@page "/"
+@using System.Text.Json
+@using Confluent.Kafka
+@using ES.Yoomoney.Core.Abstractions
+@using ES.Yoomoney.Core.IntegrationEvents
+@using JasperFx.Core
+@rendermode RenderMode.InteractiveServer
 
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
+
+@currentCount;
+@error
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+@code {
+    private int currentCount = 0;
+    [Inject] IProducer<string, string> _producer { get; set; }
+    [Inject] IKafkaProducer<PaymentAuthorizedIntegrationEvent> _producer2 { get; set; }
+    private string? error;
+
+    private async Task IncrementCount()
+    {
+        var id = Guid.NewGuid();
+        currentCount++;
+        error = "init";
+
+
+        try
+        {
+            _producer.Produce(nameof(OrderCreatedIntegrationEvent), new Message<string, string>()
+            {
+                Key = id.ToString(),
+                Value = JsonSerializer.Serialize(new OrderCreatedIntegrationEvent(id, 100))
+            });
+            await _producer2.ProduceAsync(new PaymentAuthorizedIntegrationEvent(Guid.NewGuid()), CancellationToken.None);
+        }
+        catch (Exception ex)
+        {
+            error = ex.Message;
+        }
+        currentCount++;
+    }
+
+}

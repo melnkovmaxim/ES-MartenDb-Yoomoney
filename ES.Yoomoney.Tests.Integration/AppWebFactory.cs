@@ -1,13 +1,23 @@
+using System.Collections.Concurrent;
 using System.Reflection;
 using Aspire.Npgsql;
+using Confluent.Kafka;
 using ES.Yoomoney.Api;
+using ES.Yoomoney.Core.IntegrationEvents;
+using ES.Yoomoney.Tests.Integration.ConsumerTests;
+using Google.Protobuf.WellKnownTypes;
+using KafkaFlow;
+using KafkaFlow.Serializer;
 using Marten;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Moq;
+using Testcontainers.Kafka;
 using Testcontainers.PostgreSql;
+using Yandex.Checkout.V3;
 
 namespace ES.Yoomoney.Tests.Integration;
 
@@ -19,19 +29,57 @@ public sealed class AppWebFactory: WebApplicationFactory<Program>, IAsyncLifetim
     private readonly PostgreSqlContainer _dbContainer = new PostgreSqlBuilder()
         .WithPassword("Strong_password_123!")
         .Build();
+
+    private readonly KafkaContainer _kafkaContainer = new KafkaBuilder()
+        .WithImage("confluentinc/cp-kafka:7.8.0")
+        .Build();
     
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         Environment.SetEnvironmentVariable("ConnectionStrings:postgresdb", _dbContainer.GetConnectionString());
+        Environment.SetEnvironmentVariable("ConnectionStrings:kafka", _kafkaContainer.GetBootstrapAddress());
+
+        builder.ConfigureServices(services =>
+        {
+            services.AddSingleton<IProducer<Null, string>>(sp =>
+            {
+                var producerConfig = new ProducerConfig
+                {
+                    BootstrapServers = _kafkaContainer.GetBootstrapAddress(),
+                };
+
+                return new ProducerBuilder<Null, string>(producerConfig)
+                    .Build();
+            });
+            services.ConfigureK
+            services.AddSingleton<ConcurrentQueue<OrderCreatedIntegrationEvent>>();
+            services.AddScoped<IMessageHandler<OrderCreatedIntegrationEvent>>(sp =>
+            {
+                var mock = new Mock<IMessageHandler<OrderCreatedIntegrationEvent>>();
+
+                mock.Setup(m => m.Handle(It.IsAny<IMessageContext>(), It.IsAny<OrderCreatedIntegrationEvent>()))
+                    .Callback<IMessageContext, OrderCreatedIntegrationEvent>((_, message) =>
+                    {
+                        var queue = sp.GetRequiredService<ConcurrentQueue<OrderCreatedIntegrationEvent>>();
+                        
+                        queue.Enqueue(message);
+                    })
+                    .Returns(Task.CompletedTask); 
+
+                return mock.Object;
+            });
+        });
     }
 
     public async Task InitializeAsync()
     {
         await _dbContainer.StartAsync();
+        await _kafkaContainer.StartAsync();
     }
 
     public async Task DisposeAsync()
     {
         await _dbContainer.StopAsync();
+        await _kafkaContainer.StopAsync();
     }
 }

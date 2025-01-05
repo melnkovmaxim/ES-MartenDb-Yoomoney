@@ -4,11 +4,11 @@ using MediatR;
 
 namespace ES.Yoomoney.Application.Features.IntegrationEvents;
 
-internal sealed class OrderCreatedIntegrationEventHandler(IKafkaProducer<PaymentAuthorizedIntegrationEvent> producer): INotificationHandler<OrderCreatedIntegrationEvent>
+internal sealed class OrderCreatedIntegrationEventHandler(IKafkaProducer<PaymentFailedIntegrationEvent> producer): INotificationHandler<OrderCreatedIntegrationEvent>
 {
     public async Task Handle(OrderCreatedIntegrationEvent notification, CancellationToken cancellationToken)
     {
-        var authorizedPayment = new PaymentAuthorizedIntegrationEvent(notification.OrderId);
+        var authorizedPayment = new PaymentFailedIntegrationEvent(notification.OrderId, "Test");
         
         await producer.ProduceAsync(authorizedPayment, cancellationToken);
     }
