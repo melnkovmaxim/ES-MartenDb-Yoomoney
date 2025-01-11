@@ -7,8 +7,6 @@ using KafkaFlow;
 using KafkaFlow.Serializer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace ES.Yoomoney.Infrastructure.Messaging.Extensions;
 
@@ -41,6 +39,7 @@ public static class ServiceCollectionExtensions
                                 m.AddSerializer<JsonCoreSerializer>()
                             )
                     )
+                    .AddProducer<OrderCreatedIntegrationEvent>(p => p.DefaultTopic(OrderCreatedEventsConsumer.Topic).AddMiddlewares(m => m.AddSerializer<JsonCoreSerializer>()))
                     .AddConsumer(
                         consumer => consumer
                             .Topic(OrderCreatedEventsConsumer.Topic)
@@ -49,15 +48,22 @@ public static class ServiceCollectionExtensions
                             .WithWorkersCount(3)
                             .AddMiddlewares(
                                 middlewares => middlewares
+                                    .AddSingleTypeDeserializer<OrderCreatedIntegrationEvent, JsonCoreDeserializer>()
+                                    .Add<ErrorHandlingMiddleware>()
                                     .AddTypedHandlers(handlers => handlers
                                         .AddHandler<OrderCreatedEventsConsumer>()
-                                        .WhenNoHandlerFound(context =>
-                                            Console.WriteLine($"Message not handled {context.ConsumerContext.Partition} {context.ConsumerContext.Offset}"))
+                                        .WhenNoHandlerFound(HandleException)
                                     )
                             )
                     )
             ));
 
         return services;
+    }
+
+    private static void HandleException(IMessageContext context)
+    {
+        Console.WriteLine($"Message not handled {context.ConsumerContext.Partition} {context.ConsumerContext.Offset}");
+        throw new Exception($"Message not handled {context.ConsumerContext.Partition} {context.ConsumerContext.Offset}");
     }
 }

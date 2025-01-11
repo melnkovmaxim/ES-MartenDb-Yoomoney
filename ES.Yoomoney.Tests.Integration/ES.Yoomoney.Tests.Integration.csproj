@@ -25,6 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\ES.Yoomoney.AdminPanel\ES.Yoomoney.AdminPanel\ES.Yoomoney.AdminPanel.csproj" />
       <ProjectReference Include="..\ES.Yoomoney.Api\ES.Yoomoney.Api.csproj" />
     </ItemGroup>
 

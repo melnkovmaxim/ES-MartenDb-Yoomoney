@@ -4,15 +4,18 @@ using Aspire.Npgsql;
 using Confluent.Kafka;
 using ES.Yoomoney.Api;
 using ES.Yoomoney.Core.IntegrationEvents;
+using ES.Yoomoney.Infrastructure.Messaging.Consumers;
 using ES.Yoomoney.Tests.Integration.ConsumerTests;
 using Google.Protobuf.WellKnownTypes;
 using KafkaFlow;
 using KafkaFlow.Serializer;
 using Marten;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using Moq;
 using Testcontainers.Kafka;
@@ -39,23 +42,24 @@ public sealed class AppWebFactory: WebApplicationFactory<Program>, IAsyncLifetim
         Environment.SetEnvironmentVariable("ConnectionStrings:postgresdb", _dbContainer.GetConnectionString());
         Environment.SetEnvironmentVariable("ConnectionStrings:kafka", _kafkaContainer.GetBootstrapAddress());
 
+
         builder.ConfigureServices(services =>
         {
-            services.AddSingleton<IProducer<Null, string>>(sp =>
+            services.AddSingleton<IProducer<string, string>>(sp =>
             {
                 var producerConfig = new ProducerConfig
                 {
                     BootstrapServers = _kafkaContainer.GetBootstrapAddress(),
                 };
 
-                return new ProducerBuilder<Null, string>(producerConfig)
+                return new ProducerBuilder<string, string>(producerConfig)
                     .Build();
             });
-            services.ConfigureK
             services.AddSingleton<ConcurrentQueue<OrderCreatedIntegrationEvent>>();
-            services.AddScoped<IMessageHandler<OrderCreatedIntegrationEvent>>(sp =>
+            services.RemoveAll(typeof(OrderCreatedEventsConsumer));
+            services.AddScoped<OrderCreatedEventsConsumer>(sp =>
             {
-                var mock = new Mock<IMessageHandler<OrderCreatedIntegrationEvent>>();
+                var mock = new Mock<OrderCreatedEventsConsumer>();
 
                 mock.Setup(m => m.Handle(It.IsAny<IMessageContext>(), It.IsAny<OrderCreatedIntegrationEvent>()))
                     .Callback<IMessageContext, OrderCreatedIntegrationEvent>((_, message) =>

@@ -4,6 +4,10 @@
 @using ES.Yoomoney.Core.Abstractions
 @using ES.Yoomoney.Core.IntegrationEvents
 @using JasperFx.Core
+@using KafkaFlow
+@using KafkaFlow.Producers
+@using Newtonsoft.Json
+@using JsonSerializer = System.Text.Json.JsonSerializer
 @rendermode RenderMode.InteractiveServer
 
 <PageTitle>Home</PageTitle>
@@ -19,7 +23,7 @@ Welcome to your new app.
 @code {
     private int currentCount = 0;
     [Inject] IProducer<string, string> _producer { get; set; }
-    [Inject] IKafkaProducer<PaymentAuthorizedIntegrationEvent> _producer2 { get; set; }
+    
     private string? error;
 
     private async Task IncrementCount()
@@ -36,7 +40,6 @@ Welcome to your new app.
                 Key = id.ToString(),
                 Value = JsonSerializer.Serialize(new OrderCreatedIntegrationEvent(id, 100))
             });
-            await _producer2.ProduceAsync(new PaymentAuthorizedIntegrationEvent(Guid.NewGuid()), CancellationToken.None);
         }
         catch (Exception ex)
         {
