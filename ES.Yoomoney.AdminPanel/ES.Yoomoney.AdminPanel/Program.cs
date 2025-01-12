@@ -7,13 +7,32 @@ using ES.Yoomoney.Infrastructure.Clients.Extensions;
 using ES.Yoomoney.Infrastructure.Messaging.Extensions;
 using ES.Yoomoney.Infrastructure.Persistence.EventSourcing.Extensions;
 using KafkaFlow.Serializer;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // https://www.youtube.com/watch?v=O7oaxFgNuYo
-builder.AddKafkaProducer<string, string>("kafka");
+// builder.AddKafkaProducer<string, string>("kafka");
+var k = Environment.GetEnvironmentVariable("kafka-endpoint");
+var config1 = new ProducerConfig()
+{
+    BootstrapServers = Environment.GetEnvironmentVariable("kafka-endpoint")
+};
 
+builder.Services.TryAddScoped(_ => new ConsumerBuilder<string, string>(new ConsumerConfig()
+{
+    BootstrapServers = Environment.GetEnvironmentVariable("kafka-endpoint"),
+    GroupId = $"{Guid.NewGuid()}-group",
+    AutoOffsetReset = AutoOffsetReset.Earliest,
+}).Build());
+builder.Services.AddSingleton(new ProducerBuilder<string, string>(config1).Build());
+var config = new AdminClientConfig
+{
+    BootstrapServers = Environment.GetEnvironmentVariable("kafka-endpoint")
+};
+
+builder.Services.AddSingleton(new AdminClientBuilder(config).Build());
 builder.Services
     .AddLayerApplication()
     .AddLayerInfrastructureClients()

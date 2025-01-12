@@ -1,8 +1,98 @@
+@using Confluent.Kafka
+@using ES.Yoomoney.Core.IntegrationEvents
 @inherits LayoutComponentBase
+@rendermode RenderMode.InteractiveServer
 <strong>IntegrationEventsCollection</strong>
 
-<IntegrationEventComponent/>
+Selected: @_selectedTopic
+
+<button @onclick="Load">Refresh And Load 25 last</button>
+
+<select @bind="_selectedTopic" class="form-select">
+    @foreach (var topic in GetTopics())
+    {
+        <option value="@topic">@topic</option>
+    }
+</select>
+
+Count: @_events.Count
+
+@if (!_isLoading)
+{
+    @foreach (var ev in _events)
+    {
+        <IntegrationEventComponent Topic="@ev.Topic" Message="@ev.Message"/>
+    }
+}
+else
+{
+    <p>Loading...</p>
+}
 
 @code {
-    
+
+    [Inject] IAdminClient _adminClient { get; init; }
+
+    private string _selectedTopic = string.Empty;
+    private bool _isLoading = false;
+
+    private IReadOnlyCollection<string> GetTopics()
+    {
+        return _adminClient
+            .GetMetadata(TimeSpan.FromSeconds(2))
+            .Topics
+            .Select(x => x.Topic)
+            .ToList();
+    }
+
+    private int _three;
+    [Inject] IConsumer<string, string> _consumer { get; init; }
+
+    private List<(string Topic, Message<string, string> Message)> _events { get; init; } = new();
+
+    private async Task Load()
+    {
+        if (_isLoading == true)
+        {
+            return;
+        }
+        
+        _isLoading = true;
+        _events.Clear();
+        _consumer.Subscribe(_selectedTopic);
+
+        foreach (var partition in _consumer.Assignment)
+        {
+            var lastOffset = _consumer.GetWatermarkOffsets(partition);
+            var startOffset = lastOffset.High - 25;
+            
+            _consumer.Seek(new TopicPartitionOffset(partition, startOffset));
+        }
+
+        await Task.Run(() =>
+        {
+            try
+            {
+                while (_events.Count < 25)
+                {
+                    var @event = _consumer.Consume(TimeSpan.FromSeconds(2));
+
+                    _events.Add((@event.Topic, @event.Message));
+                }
+            }
+            catch (Exception ex)
+            {
+                // ignored
+            }
+            finally
+            {
+                _consumer.Unsubscribe();
+            }
+        });
+
+        _events.Reverse();
+        _isLoading = false;
+        StateHasChanged();
+    }
+
 }

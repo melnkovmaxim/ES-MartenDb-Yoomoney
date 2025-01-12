@@ -18,13 +18,16 @@ Welcome to your new app.
 
 @currentCount;
 @error
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<button class="btn btn-primary" @onclick="IncrementCount">Publish event</button>
+
+Last published event: @_lastPublishedEvent
 
 @code {
     private int currentCount = 0;
     [Inject] IProducer<string, string> _producer { get; set; }
     
     private string? error;
+    private string? _lastPublishedEvent;
 
     private async Task IncrementCount()
     {
@@ -35,10 +38,12 @@ Welcome to your new app.
 
         try
         {
-            _producer.Produce(nameof(OrderCreatedIntegrationEvent), new Message<string, string>()
+            _lastPublishedEvent = JsonSerializer.Serialize(new OrderCreatedIntegrationEvent(id, 100));
+            
+            await _producer.ProduceAsync(nameof(OrderCreatedIntegrationEvent), new Message<string, string>()
             {
                 Key = id.ToString(),
-                Value = JsonSerializer.Serialize(new OrderCreatedIntegrationEvent(id, 100))
+                Value = _lastPublishedEvent
             });
         }
         catch (Exception ex)

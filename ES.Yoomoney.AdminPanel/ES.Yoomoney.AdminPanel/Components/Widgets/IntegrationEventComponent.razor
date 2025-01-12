@@ -1,15 +1,21 @@
 @inherits LayoutComponentBase
+@using Confluent.Kafka
 @using Microsoft.AspNetCore.Components.Web
 @rendermode RenderMode.InteractiveServer
 <div class="rounded-2 border-1 border-black border p-1">
-    <span>Event name: NAME</span>
+    <span>Event name: @Topic</span>
     <br/>
-    <span>Event json: JSON</span>
+    <span>Event key: @Message.Key</span>
+    <br/>
+    <span>Event json: @Message.Value</span>
     <p>@_text</p>
     <button @onclick="Click">Click</button>
 </div>
 
 @code {
+    [Parameter] public string Topic { get; set; }
+    [Parameter] public Message<string, string> Message {get; set; }
+    
     private string _text { get; set; }
     
     protected override void OnInitialized()

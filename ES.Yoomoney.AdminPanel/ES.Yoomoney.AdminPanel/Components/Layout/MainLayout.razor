@@ -11,13 +11,15 @@
             <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
         </div>
 
-        <article class="content px-4">
-            @Body
-        </article>
+        <article class="content px-4 d-lg-flex justify-content-between w-100">
+            <div>
+                @Body
+            </div>
 
-        <aside class="w-50 m-1">
-            <IntegrationEventsCollectionComponent/>
-        </aside>
+            <aside class="w-50 m-1 w-25">
+                <IntegrationEventsCollectionComponent/>
+            </aside>
+        </article>
     </main>
 </div>
 
