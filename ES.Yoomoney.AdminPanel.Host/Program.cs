@@ -19,4 +19,12 @@ _ = builder
     .WithReference(kafkaInstance)
     .WaitFor(kafkaInstance);
 
+_ = builder
+    .AddProject<ES_Yoomoney_AdminPanel>("EsYoomoneyAdmin")
+    .WithReference(postgresInstance)
+    .WaitFor(postgresInstance)
+    .WithReference(kafkaInstance)
+    .WithEnvironment("kafka-endpoint", () => $"{kafkaInstance.Resource.ConnectionStringExpression.ValueProviders.First().GetValueAsync().GetAwaiter().GetResult()}:{kafkaInstance.Resource.ConnectionStringExpression.ValueProviders.Skip(1).First().GetValueAsync().GetAwaiter().GetResult()}")
+    .WaitFor(kafkaInstance);
+
 builder.Build().Run();

@@ -28,5 +28,6 @@ public sealed class EventStoreTests(AppWebFactory factory)
         
 
         projection.IsSuccess.Should().Be(true);
+        projection.Value.Amount.Should().Be(100);
     }
 }

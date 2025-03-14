@@ -1,6 +1,6 @@
 @Yoomoney_HostAddress = http://localhost:5068
 
-POST {{Yoomoney_HostAddress}}/payments
+POST {{Yoomoney_HostAddress}}/invoices
 Accept: application/json
 Content-Type: application/json
 

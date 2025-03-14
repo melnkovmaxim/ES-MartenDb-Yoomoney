@@ -8,16 +8,17 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <IsAspireHost>true</IsAspireHost>
-        <UserSecretsId>9cc75776-27be-405b-8a8a-bee6a0f8e619</UserSecretsId>
+        <UserSecretsId>8160c968-d94c-4edb-94ea-2df719a119be</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Aspire.Hosting.AppHost" Version="9.0.0"/>
-        <PackageReference Include="Aspire.Hosting.Kafka" Version="9.0.0"/>
-        <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="9.0.0"/>
+        <PackageReference Include="Aspire.Hosting.Kafka" Version="9.0.0" />
+        <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="9.0.0" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\ES.Yoomoney.AdminPanel\ES.Yoomoney.AdminPanel\ES.Yoomoney.AdminPanel.csproj" />
       <ProjectReference Include="..\ES.Yoomoney.Api\ES.Yoomoney.Api.csproj" />
     </ItemGroup>
 

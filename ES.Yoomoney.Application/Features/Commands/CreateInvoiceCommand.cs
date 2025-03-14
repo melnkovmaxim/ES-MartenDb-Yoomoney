@@ -5,7 +5,7 @@ using MediatR;
 
 namespace ES.Yoomoney.Application.Features.Commands;
 
-public static class CreatePaymentCommand
+public static class CreateInvoiceCommand
 {
     public sealed record Request(Guid AccountId, decimal Amount) : IRequest<Response>;
     public sealed record Response(string PaymentId, string ConfirmationUrl);
@@ -17,7 +17,7 @@ public static class CreatePaymentCommand
     {
         public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
         {
-            var payment = await paymentService.CreatePaymentAsync(request.Amount);
+            var payment = await paymentService.CreateInvoiceAsync(request.Amount);
             var @event = new AccountBalanceInitializedEvent(request.AccountId);
             var eventStore = unitOfWork.CreateEventStore();
 

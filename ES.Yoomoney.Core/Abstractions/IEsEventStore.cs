@@ -1,4 +1,3 @@
-using ES.Yoomoney.Core.DomainEvents;
 using ES.Yoomoney.Core.OperationResult;
 using ES.Yoomoney.Core.Projections;
 

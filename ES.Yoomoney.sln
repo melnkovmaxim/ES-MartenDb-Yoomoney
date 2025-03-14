@@ -2,9 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Api", "ES.Yoomoney.Api\ES.Yoomoney.Api.csproj", "{3FBF453E-AD83-4141-A19E-BB4335C59067}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Host", "ES.Yoomoney.Host\ES.Yoomoney.Host.csproj", "{68D56559-E38C-420E-8E2C-1191CE3CD10F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.AdminPanel.Host", "ES.Yoomoney.AdminPanel.Host\ES.Yoomoney.AdminPanel.Host.csproj", "{68D56559-E38C-420E-8E2C-1191CE3CD10F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.ServiceDefaults", "ES.Yoomoney.ServiceDefaults\ES.Yoomoney.ServiceDefaults.csproj", "{AB8F374A-7494-4E12-A208-B927DB2763A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.AdminPanel.ServiceDefaults", "ES.Yoomoney.AdminPanel.ServiceDefaults\ES.Yoomoney.AdminPanel.ServiceDefaults.csproj", "{AB8F374A-7494-4E12-A208-B927DB2763A7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Application", "ES.Yoomoney.Application\ES.Yoomoney.Application.csproj", "{66D620EB-9EAF-4039-9614-5AE2C54FDA52}"
 EndProject
@@ -33,6 +33,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.AdminPanel", "ES.Yoomoney.AdminPanel\ES.Yoomoney.AdminPanel\ES.Yoomoney.AdminPanel.csproj", "{3561A0E1-56CE-4575-A0CC-D78EEFB73F5A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.AdminPanel.Client", "ES.Yoomoney.AdminPanel\ES.Yoomoney.AdminPanel.Client\ES.Yoomoney.AdminPanel.Client.csproj", "{3F119BB6-D46F-4A09-8E9B-C23877AE97EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Host", "ES.Yoomoney.Host\ES.Yoomoney.Host.csproj", "{164515F5-B0AA-4F4E-AC2E-DA0656097686}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -96,6 +98,10 @@ Global
 		{3F119BB6-D46F-4A09-8E9B-C23877AE97EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F119BB6-D46F-4A09-8E9B-C23877AE97EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F119BB6-D46F-4A09-8E9B-C23877AE97EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{164515F5-B0AA-4F4E-AC2E-DA0656097686}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{164515F5-B0AA-4F4E-AC2E-DA0656097686}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{164515F5-B0AA-4F4E-AC2E-DA0656097686}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{164515F5-B0AA-4F4E-AC2E-DA0656097686}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9561AD15-3C70-47F2-B07F-74141C844159} = {B634CB2C-FDEC-44CB-8E6A-F99EB08C5D9E}

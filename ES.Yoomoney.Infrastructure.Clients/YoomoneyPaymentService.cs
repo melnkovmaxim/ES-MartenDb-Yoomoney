@@ -1,12 +1,11 @@
-﻿
-using ES.Yoomoney.Core.Abstractions;
+﻿using ES.Yoomoney.Core.Abstractions;
 using Yandex.Checkout.V3;
 
-namespace ES.Yoomoney.Application.PaymentServices
+namespace ES.Yoomoney.Infrastructure.Clients
 {
     public class YoomoneyPaymentService(Client client) : IPaymentService
     {
-        public Task<(string PaymentId, string ConfirmationUrl)> CreatePaymentAsync(decimal amount)
+        public Task<(string PaymentId, string ConfirmationUrl)> CreateInvoiceAsync(decimal amount)
         {
             var newPayment = new NewPayment()
             {
@@ -17,7 +16,14 @@ namespace ES.Yoomoney.Application.PaymentServices
                 },
                 PaymentMethodData = new PaymentMethod()
                 {
-                    Type = PaymentMethodType.BankCard
+                    Type = PaymentMethodType.BankCard,
+                    Card = new Card()
+                    {
+                        Number = "5555555555554444",
+                        ExpiryMonth = "01",
+                        ExpiryYear = "2029",
+                        Csc = "234"
+                    }
                 },
                 Amount = new Amount()
                 {

@@ -9,11 +9,11 @@ public sealed class PaymentEndpoints: IHasEndpoints
 {
     public void MapEndpoints(IEndpointRouteBuilder builder)
     {
-        builder.MapPost("/payments", CreatePayment);
+        builder.MapPost("/invoices", CreateInvoice);
     }
 
-    private async Task<IResult> CreatePayment(
-        [FromBody] CreatePaymentCommand.Request request, 
+    private async Task<IResult> CreateInvoice(
+        [FromBody] CreateInvoiceCommand.Request request, 
         [FromServices] ISender sender,
         CancellationToken ct)
     {

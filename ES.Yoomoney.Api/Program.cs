@@ -5,7 +5,7 @@ using ES.Yoomoney.Infrastructure.Clients.Extensions;
 using ES.Yoomoney.Infrastructure.Messaging.Extensions;
 using ES.Yoomoney.Infrastructure.Persistence.EventSourcing.Extensions;
 using ES.Yoomoney.Infrastructure.Workers.Extensions;
-using ES.Yoomoney.ServiceDefaults;
+using ES.Yoomoney.AdminPanel.ServiceDefaults;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
