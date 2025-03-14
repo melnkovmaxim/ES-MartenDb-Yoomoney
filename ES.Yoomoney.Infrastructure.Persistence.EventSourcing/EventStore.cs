@@ -7,71 +7,24 @@ using IEventStore = Marten.Events.IEventStore;
 
 namespace ES.Yoomoney.Infrastructure.Persistence.EventSourcing;
 
-public sealed class EventStore(IDocumentSession session): IEsEventStore, IAsyncDisposable
+public sealed class EventStore(IDocumentStore store): IEsEventStore
 {
-    public async Task AddEventsAsync(Aggregate aggregate, CancellationToken ct)
+    public async Task StoreAsync(Aggregate aggregate, CancellationToken ct)
     {
-        session.Events.A(aggregate.)
-    }
-    
-    public async Task AddEventAsync<TEvent>(
-        TEvent @event,
-        bool isExclusiveLock = false)
-        where TEvent: IDomainEvent
-    {
-        if (isExclusiveLock)
-        {
-            await session.Events.AppendExclusive(@event.StreamId, @event);
-        }
-        else
-        {
-            session.Events.Append(@event.StreamId, @event);
-        }
-    }
-    
-    public async Task<Result<TProjection>> GetProjectionAndCreateSnapshotAsync<TProjection>(Guid streamId, CancellationToken ct)
-        where TProjection : class, IApplicationProjection, new()
-    {
-        var snapshot = await session.LoadAsync<TProjection>(streamId, ct);
-        var projection = snapshot is null
-            ? await session.Events.AggregateStreamAsync<TProjection>(streamId, token: ct)
-            : await session.Events.AggregateStreamAsync(streamId, state: snapshot, fromVersion: snapshot.Version + 1, token: ct);
-
-        if (projection is null)
-        {
-            return Result<TProjection>.Fail("Projection missing");
-        }
-
-        if (projection.EventsCount >= 50)
-        {
-            session.Store(projection);
-
-            await session.SaveChangesAsync(ct);
-        }
-
-        return Result<TProjection>.Success(projection);
+        await using var session = await store.LightweightSerializableSessionAsync(token: ct);
+        var events = aggregate.GetUncommittedEvents();
+        session.Events.Append(aggregate.Id, aggregate.Version, events);
+        await session.SaveChangesAsync(ct);
     }
 
-    private Guid ValidateAndGetStreamId<TEvent>(IReadOnlyCollection<TEvent> events)
-        where TEvent : IDomainEvent
+    public async Task<T> LoadAsync<T>(
+        Guid id,
+        int? version,
+        CancellationToken ct
+    ) where T : Aggregate
     {
-        if (!events.Any())
-        {
-            throw new Exception("Cant save empty collection of domain events");
-        }
-
-        var streamId = events.First().StreamId;
-
-        if (events.Any(e => e.StreamId != streamId))
-        {
-            throw new Exception("Cant save events to different streams in one transaction");
-        }
-
-        return streamId;
-    }
-
-    public async ValueTask DisposeAsync()
-    {
-        await session.DisposeAsync();
+        await using var session = await store.LightweightSerializableSessionAsync(token: ct);
+        var aggregate = await session.Events.AggregateStreamAsync<T>(id, version ?? 0, token: ct);
+        return aggregate ?? throw new InvalidOperationException($"No aggregate by id {id}.");
     }
 }

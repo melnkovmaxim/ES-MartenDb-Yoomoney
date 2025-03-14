@@ -13,13 +13,13 @@ public static class Events
 
     public sealed record AccountBalanceInitializedTo(Guid AccountId) : Event(AccountId);
 
-    public sealed record DebitBalanceDomainEvent(
+    public sealed record MoneyDepositedDomainEvent(
         Guid AccountId,
         decimal Amount,
         PaymentSystemsEnum paymentSystem,
         Payment paymentMeta) : Event(AccountId);
 
-    public sealed record TopupBalanceDomainEvent (
+    public sealed record MoneyWithdrawnDomainEvent (
         Guid AccountId, 
         decimal Amount) : Event(AccountId);
 }

@@ -1,7 +1,5 @@
 using ES.Yoomoney.Core.Abstractions;
-using ES.Yoomoney.Core.DomainEvents;
 using ES.Yoomoney.Core.Entities;
-using ES.Yoomoney.Core.Enums;
 using ES.Yoomoney.Core.IntegrationEvents;
 using MediatR;
 using Yandex.Checkout.V3;
@@ -29,26 +27,26 @@ internal sealed class PaymentReceivedIntegrationEventHandler(
     {
         var accountPaymentEntity = await accountPaymentRepository.GetFirstOrDefaultAsync(payment.Id, ct);
 
-        if (accountPaymentEntity is null)
-        {
-            var unprocessedPayment = new UnprocessedPaymentEntity(payment.Id, payment);
-            
-            await unprocesedPaymentRepository.UpsertAsync(unprocessedPayment, ct);
-            await paymentService.CapturePaymentsAsync(payment.Id);
-            
-            return;
-        }
-        
-        var debitBalanceEvent = new DebitBalanceDomainEvent(accountPaymentEntity.AccountId, payment.Amount.Value, PaymentSystemsEnum.Yoomoney, payment);
-
-        var eventStore = unitOfWork.CreateEventStore();
-
-        await eventStore.AddEventAsync(debitBalanceEvent);
-        await unitOfWork.CommitAsync();
-        await paymentService.CapturePaymentsAsync(payment.Id);
-        
-        accountPaymentEntity.SetIsProcessed();
-
-        await accountPaymentRepository.UpsertAsync(accountPaymentEntity, CancellationToken.None);
+        // if (accountPaymentEntity is null)
+        // {
+        //     var unprocessedPayment = new UnprocessedPaymentEntity(payment.Id, payment);
+        //     
+        //     await unprocesedPaymentRepository.UpsertAsync(unprocessedPayment, ct);
+        //     await paymentService.CapturePaymentsAsync(payment.Id);
+        //     
+        //     return;
+        // }
+        //
+        // var debitBalanceEvent = new DebitBalanceDomainEvent(accountPaymentEntity.AccountId, payment.Amount.Value, PaymentSystemsEnum.Yoomoney, payment);
+        //
+        // var eventStore = unitOfWork.CreateEventStore();
+        //
+        // await eventStore.AddEventAsync(debitBalanceEvent);
+        // await unitOfWork.CommitAsync();
+        // await paymentService.CapturePaymentsAsync(payment.Id);
+        //
+        // accountPaymentEntity.SetIsProcessed();
+        //
+        // await accountPaymentRepository.UpsertAsync(accountPaymentEntity, CancellationToken.None);
     }
 }

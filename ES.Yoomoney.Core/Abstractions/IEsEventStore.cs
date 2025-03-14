@@ -1,15 +1,16 @@
+using ES.Yoomoney.Core.Aggregates;
 using ES.Yoomoney.Core.OperationResult;
 using ES.Yoomoney.Core.Projections;
 
 namespace ES.Yoomoney.Core.Abstractions;
 
-public interface IEsEventStore: IAsyncDisposable
+public interface IEsEventStore
 {
-    Task AddEventAsync<TEvent>(
-        TEvent @event,
-        bool isExclusiveLock = false)
-        where TEvent: IDomainEvent;
-    
-    Task<Result<TProjection>> GetProjectionAndCreateSnapshotAsync<TProjection>(Guid streamId, CancellationToken ct)
-        where TProjection : class, IApplicationProjection, new();
+    Task StoreAsync(Aggregate aggregate, CancellationToken ct);
+
+    Task<T> LoadAsync<T>(
+        Guid id,
+        int? version,
+        CancellationToken ct
+    ) where T : Aggregate;
 }

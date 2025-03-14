@@ -5,28 +5,29 @@ namespace ES.Yoomoney.Core.Aggregates;
 
 public sealed partial class BankAccountAggregate
 {
-    public BankAccountAggregate(Events.AccountBalanceInitializedTo to)
+    private BankAccountAggregate Apply(Events.AccountBalanceInitializedTo @event)
     {
-        Events.Add(to);
-    }
-
-    public BankAccountAggregate Apply(Events.AccountBalanceInitializedTo to)
-    {
-        return new BankAccountAggregate(to);
-    }
-
-    public BankAccountAggregate Apply(Events.DebitBalanceDomainEvent @event)
-    {
-        Balance += @event.Amount;
-        Events.Add(@event);
+        Id = @event.StreamId;
+        
+        IncreaseVersion();
 
         return this;
     }
 
-    public BankAccountAggregate Apply(Events.TopupBalanceDomainEvent @event)
+    private BankAccountAggregate Apply(Events.MoneyDepositedDomainEvent @event)
+    {
+        Balance += @event.Amount;
+
+        IncreaseVersion();
+
+        return this;
+    }
+
+    private BankAccountAggregate Apply(Events.MoneyWithdrawnDomainEvent @event)
     {
         Balance -= @event.Amount;
-        Events.Add(@event);
+
+        IncreaseVersion();
 
         return this;
     }

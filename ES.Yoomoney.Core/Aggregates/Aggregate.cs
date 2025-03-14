@@ -2,7 +2,7 @@
 
 public abstract class Aggregate
 {
-    public Guid StreamId { get; private set; }
+    public Guid Id { get; protected set; }
     public int Version { get; private set; }
     protected List<Events.Event> Events { get; } = [];
 
@@ -13,5 +13,10 @@ public abstract class Aggregate
         Events.Clear();
         
         return uncommitedEvents;
+    }
+
+    protected void IncreaseVersion()
+    {
+        Version++;
     }
 }
