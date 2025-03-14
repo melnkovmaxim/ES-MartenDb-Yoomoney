@@ -8,7 +8,7 @@ public interface IEsEventStore
 {
     Task StoreAsync(Aggregate aggregate, CancellationToken ct);
 
-    Task<T> LoadAsync<T>(
+    Task<T?> LoadAsync<T>(
         Guid id,
         int? version,
         CancellationToken ct

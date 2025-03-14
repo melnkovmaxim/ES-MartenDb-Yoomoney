@@ -17,7 +17,7 @@ public sealed class EventStore(IDocumentStore store): IEsEventStore
         await session.SaveChangesAsync(ct);
     }
 
-    public async Task<T> LoadAsync<T>(
+    public async Task<T?> LoadAsync<T>(
         Guid id,
         int? version,
         CancellationToken ct
@@ -25,6 +25,6 @@ public sealed class EventStore(IDocumentStore store): IEsEventStore
     {
         await using var session = await store.LightweightSerializableSessionAsync(token: ct);
         var aggregate = await session.Events.AggregateStreamAsync<T>(id, version ?? 0, token: ct);
-        return aggregate ?? throw new InvalidOperationException($"No aggregate by id {id}.");
+        return aggregate;
     }
 }
