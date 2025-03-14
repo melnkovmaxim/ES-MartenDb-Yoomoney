@@ -1,4 +1,5 @@
 ﻿using ES.Yoomoney.Core.Abstractions;
+using ES.Yoomoney.Core.Aggregates;
 using ES.Yoomoney.Core.OperationResult;
 using ES.Yoomoney.Core.Projections;
 using Marten;
@@ -8,10 +9,10 @@ namespace ES.Yoomoney.Infrastructure.Persistence.EventSourcing;
 
 public sealed class EventStore(IDocumentSession session): IEsEventStore, IAsyncDisposable
 {
-    // public async Task<bool> ExistsAsync()
-    // {
-    //     await session.Events.
-    // }
+    public async Task AddEventsAsync(Aggregate aggregate, CancellationToken ct)
+    {
+        session.Events.A(aggregate.)
+    }
     
     public async Task AddEventAsync<TEvent>(
         TEvent @event,

@@ -6,7 +6,7 @@ namespace ES.Yoomoney.Core.Aggregates;
 
 public static class Events
 {
-    public record Event(Guid StreamId) : IDomainEvent
+    public abstract record Event(Guid StreamId) : IDomainEvent
     {
         public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
     }
@@ -19,7 +19,7 @@ public static class Events
         PaymentSystemsEnum paymentSystem,
         Payment paymentMeta) : Event(AccountId);
 
-    public sealed record TopupBalanceDomainEvent(
+    public sealed record TopupBalanceDomainEvent (
         Guid AccountId, 
         decimal Amount) : Event(AccountId);
 }

@@ -3,10 +3,7 @@ using ES.Yoomoney.Core.Projections;
 
 namespace ES.Yoomoney.Core.Aggregates;
 
-public sealed partial class BankAccountAggregate :
-    IApplyEvent<BankAccountAggregate, Events.AccountBalanceInitializedTo>,
-    IApplyEvent<BankAccountAggregate, Events.DebitBalanceDomainEvent>,
-    IApplyEvent<BankAccountAggregate, Events.TopupBalanceDomainEvent>
+public sealed partial class BankAccountAggregate
 {
     public BankAccountAggregate(Events.AccountBalanceInitializedTo to)
     {
