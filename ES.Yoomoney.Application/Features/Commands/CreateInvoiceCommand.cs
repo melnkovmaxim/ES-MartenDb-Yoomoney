@@ -19,13 +19,8 @@ public static class CreateInvoiceCommand
         public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
         {
             var payment = await paymentService.CreateInvoiceAsync(request.Amount);
-            var bankAccount =
-                await eventStore.LoadAsync<BankAccountAggregate>(request.AccountId, version: null, cancellationToken);
-
-            if (bankAccount is null)
-            {
-                bankAccount = BankAccountAggregate.Open();
-            }
+            var bankAccount = await eventStore.LoadAsync<BankAccountAggregate>(request.AccountId, version: null, cancellationToken) 
+                              ?? BankAccountAggregate.Open();
 
             bankAccount.Deposit(request.Amount);
             

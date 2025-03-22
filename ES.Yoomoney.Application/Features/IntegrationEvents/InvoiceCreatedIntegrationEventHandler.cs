@@ -4,7 +4,7 @@ using MediatR;
 
 namespace ES.Yoomoney.Application.Features.IntegrationEvents;
 
-internal sealed class OrderCreatedIntegrationEventHandler(IKafkaProducer<PaymentFailedIntegrationEvent> producer): INotificationHandler<OrderCreatedIntegrationEvent>
+internal sealed class InvoiceCreatedIntegrationEventHandler(IKafkaProducer<PaymentFailedIntegrationEvent> producer): INotificationHandler<OrderCreatedIntegrationEvent>
 {
     public async Task Handle(OrderCreatedIntegrationEvent notification, CancellationToken cancellationToken)
     {

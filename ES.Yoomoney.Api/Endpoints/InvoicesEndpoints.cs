@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ES.Yoomoney.Api.Endpoints;
 
-public sealed class PaymentEndpoints: IHasEndpoints
+public sealed class InvoicesEndpoints: IHasEndpoints
 {
     public void MapEndpoints(IEndpointRouteBuilder builder)
     {
@@ -21,4 +21,6 @@ public sealed class PaymentEndpoints: IHasEndpoints
 
         return TypedResults.Ok(result);
     }
+    
+    private async Task<IResult> 
 }

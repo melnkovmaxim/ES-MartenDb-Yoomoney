@@ -6,7 +6,7 @@ using Yandex.Checkout.V3;
 
 namespace ES.Yoomoney.Application.Features.IntegrationEvents;
 
-internal sealed class PaymentReceivedIntegrationEventHandler(
+internal sealed class InvoicePayedIntegrationEventHandler(
     IPaymentService paymentService,
     IEsUnitOfWork unitOfWork,
     IRepository<AccountPaymentEntity> accountPaymentRepository,
