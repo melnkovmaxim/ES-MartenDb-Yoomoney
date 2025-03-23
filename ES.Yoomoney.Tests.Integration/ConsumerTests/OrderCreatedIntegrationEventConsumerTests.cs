@@ -21,16 +21,16 @@ public sealed class OrderCreatedIntegrationEventConsumerTests(AppWebFactory fact
         var result1 = await producer.ProduceAsync(nameof(OrderCreatedIntegrationEvent), new Message<string, string>()
         {
             Key = nameof(OrderCreatedIntegrationEvent),
-            Value = JsonSerializer.Serialize(new OrderCreatedIntegrationEvent(Guid.NewGuid(), 100))
+            Value = JsonSerializer.Serialize(new OrderCreatedIntegrationEvent(Guid.CreateVersion7(), 100))
         });
         var result = await _producer.ProduceAsync(nameof(OrderCreatedIntegrationEvent), new Message<string, string>()
         {
             Key = nameof(OrderCreatedIntegrationEvent),
-            Value = JsonSerializer.Serialize(new OrderCreatedIntegrationEvent(Guid.NewGuid(), 100))
+            Value = JsonSerializer.Serialize(new OrderCreatedIntegrationEvent(Guid.CreateVersion7(), 100))
         });
 
         // var handler = factory.Resolve<IMessageHandler<OrderCreatedIntegrationEvent>>();
-        // await handler.Handle(null, new OrderCreatedIntegrationEvent(Guid.NewGuid(), 100));
+        // await handler.Handle(null, new OrderCreatedIntegrationEvent(Guid.CreateVersion7(), 100));
     
         await Task.Delay(1000);
 

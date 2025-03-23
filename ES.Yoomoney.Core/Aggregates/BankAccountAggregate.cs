@@ -12,14 +12,14 @@ public sealed partial class BankAccountAggregate: Aggregate
     {
     }
 
-    public static BankAccountAggregate Open()
+    public static BankAccountAggregate Open(Guid accountId)
     {
         var bankAccount = new BankAccountAggregate();
-        var bankAccountId = Guid.NewGuid();
+        var bankAccountId = accountId;
         var @event = new Events.AccountBalanceInitializedTo(bankAccountId);
 
         bankAccount.Apply(@event);
-        bankAccount.Events.Add(@event);
+        bankAccount.UncommittedEvents.Add(@event);
 
         return bankAccount;
     }
@@ -30,7 +30,7 @@ public sealed partial class BankAccountAggregate: Aggregate
         
         Apply(@event);
         
-        Events.Add(@event);
+        UncommittedEvents.Add(@event);
     }
 
     public void Withdrawn(decimal amount)
@@ -39,6 +39,6 @@ public sealed partial class BankAccountAggregate: Aggregate
         
         Apply(new Events.MoneyWithdrawnDomainEvent(Id, amount));
         
-        Events.Add(@event);
+        UncommittedEvents.Add(@event);
     }
 }

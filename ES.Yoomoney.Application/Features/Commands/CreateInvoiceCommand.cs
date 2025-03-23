@@ -13,14 +13,13 @@ public static class CreateInvoiceCommand
 
     public sealed class Handler(
         IEsEventStore eventStore,
-        IRepository<AccountPaymentEntity> accountPaymentRepository,
         IPaymentService paymentService) : IRequestHandler<Request, Response>
     {
         public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
         {
             var payment = await paymentService.CreateInvoiceAsync(request.Amount);
             var bankAccount = await eventStore.LoadAsync<BankAccountAggregate>(request.AccountId, version: null, cancellationToken) 
-                              ?? BankAccountAggregate.Open();
+                              ?? BankAccountAggregate.Open(request.AccountId);
 
             bankAccount.Deposit(request.Amount);
             

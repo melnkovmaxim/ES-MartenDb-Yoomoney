@@ -5,17 +5,25 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <IsPackable>false</IsPackable>
+        <InternalsVisibleTo>ES.Yoomoney.Tests.Unit</InternalsVisibleTo>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="coverlet.collector" Version="6.0.2"/>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1"/>
+        <PackageReference Include="Moq" Version="4.20.70"/>
+        <PackageReference Include="Shouldly" Version="4.2.1"/>
         <PackageReference Include="xunit" Version="2.9.2"/>
         <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2"/>
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\ES.Yoomoney.Infrastructure.Workers\ES.Yoomoney.Infrastructure.Workers.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
         <Using Include="Xunit"/>
+        <Using Include="Shouldly"/>
     </ItemGroup>
 
 </Project>

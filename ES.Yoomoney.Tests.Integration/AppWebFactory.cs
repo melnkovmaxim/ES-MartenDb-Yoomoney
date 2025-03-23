@@ -62,7 +62,7 @@ public sealed class AppWebFactory: WebApplicationFactory<Program>, IAsyncLifetim
                 var mock = new Mock<OrderCreatedEventsConsumer>();
 
                 mock.Setup(m => m.Handle(It.IsAny<IMessageContext>(), It.IsAny<OrderCreatedIntegrationEvent>()))
-                    .Callback<IMessageContext, OrderCreatedIntegrationEvent>((_, messageeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee) =>
+                    .Callback<IMessageContext, OrderCreatedIntegrationEvent>((_, message) =>
                     {
                         var queue = sp.GetRequiredService<ConcurrentQueue<OrderCreatedIntegrationEvent>>();
                         

@@ -11,6 +11,8 @@ public sealed partial class BankAccountAggregate
         
         IncreaseVersion();
 
+        CommittedEvents.Add(@event);
+
         return this;
     }
 
@@ -20,6 +22,8 @@ public sealed partial class BankAccountAggregate
 
         IncreaseVersion();
 
+        CommittedEvents.Add(@event);
+
         return this;
     }
 
@@ -28,6 +32,8 @@ public sealed partial class BankAccountAggregate
         Balance -= @event.Amount;
 
         IncreaseVersion();
+
+        CommittedEvents.Add(@event);
 
         return this;
     }

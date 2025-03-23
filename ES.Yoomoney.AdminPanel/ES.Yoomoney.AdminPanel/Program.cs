@@ -23,7 +23,7 @@ var config1 = new ProducerConfig()
 builder.Services.TryAddScoped(_ => new ConsumerBuilder<string, string>(new ConsumerConfig()
 {
     BootstrapServers = Environment.GetEnvironmentVariable("kafka-endpoint"),
-    GroupId = $"{Guid.NewGuid()}-group",
+    GroupId = $"{Guid.CreateVersion7()}-group",
     AutoOffsetReset = AutoOffsetReset.Earliest,
 }).Build());
 builder.Services.AddSingleton(new ProducerBuilder<string, string>(config1).Build());

@@ -4,15 +4,21 @@ public abstract class Aggregate
 {
     public Guid Id { get; protected set; }
     public int Version { get; private set; }
-    protected List<Events.Event> Events { get; } = [];
+    protected List<Events.Event> UncommittedEvents { get; } = [];
+    protected List<Events.Event> CommittedEvents { get; } = [];
 
     public IReadOnlyCollection<Events.Event> GetUncommittedEvents()
     {
-        var uncommitedEvents = Events.ToArray();
+        var uncommittedEvents = UncommittedEvents.ToArray();
         
-        Events.Clear();
+        UncommittedEvents.Clear();
         
-        return uncommitedEvents;
+        return uncommittedEvents;
+    }
+
+    public IReadOnlyCollection<Events.Event> GetCommittedEvents()
+    {
+        return CommittedEvents;
     }
 
     protected void IncreaseVersion()

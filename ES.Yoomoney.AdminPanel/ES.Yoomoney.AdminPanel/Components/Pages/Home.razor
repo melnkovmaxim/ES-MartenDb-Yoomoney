@@ -31,7 +31,7 @@ Last published event: @_lastPublishedEvent
 
     private async Task IncrementCount()
     {
-        var id = Guid.NewGuid();
+        var id = Guid.CreateVersion7();
         currentCount++;
         error = "init";
 

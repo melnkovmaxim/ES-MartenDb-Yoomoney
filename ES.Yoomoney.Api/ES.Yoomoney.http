@@ -5,8 +5,11 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "AccountId": "d48f6448-3fe4-4898-91ce-db79b5f57c9a",
+  "AccountId": "1583f5c0-ec74-4bd6-8ab3-179d877f9070",
   "Amount": 100.50
 }
 
 ###
+
+GET {{Yoomoney_HostAddress}}/invoices?accountId=1583f5c0-ec74-4bd6-8ab3-179d877f9070&page=1&pageSize=10
+Accept: application/json
