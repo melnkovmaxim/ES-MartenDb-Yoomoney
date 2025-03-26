@@ -11,7 +11,7 @@ using Yandex.Checkout.V3;
 
 namespace ES.Yoomoney.Infrastructure.Messaging.Consumers;
 
-public sealed class OrderCreatedEventsConsumer(IPublisher mediator)
+public sealed class InvoiceStatusChangedConsumer(IPublisher mediator)
     : IMessageHandler<InvoiceStatusChangedIntegrationEvent>
 {
     public async Task Handle(IMessageContext context, InvoiceStatusChangedIntegrationEvent message)

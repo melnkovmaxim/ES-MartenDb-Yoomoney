@@ -5,7 +5,7 @@ using KafkaFlow;
 namespace ES.Yoomoney.Infrastructure.Messaging.Producers;
 
 internal sealed class PaymentAuthorizedEventsProducer(
-    IMessageProducer<InvoiceStatusChangedIntegrationEvent> producer): IKafkaProducer<InvoiceStatusChangedIntegrationEvent>
+    IMessageProducer<InvoiceStatusChangedIntegrationEvent> producer): IEventBus<InvoiceStatusChangedIntegrationEvent>
 {
     public Task ProduceAsync(InvoiceStatusChangedIntegrationEvent @event, CancellationToken ct)
     {

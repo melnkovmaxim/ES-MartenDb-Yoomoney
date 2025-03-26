@@ -49,7 +49,7 @@ public static class ServiceCollectionExtensions
                             .AddSingleTypeDeserializer<InvoiceStatusChangedIntegrationEvent, JsonCoreDeserializer>()
                             .Add<ErrorHandlingMiddleware>()
                             .AddTypedHandlers(handlers => handlers
-                                .AddHandler<OrderCreatedEventsConsumer>()
+                                .AddHandler<InvoiceStatusChangedConsumer>()
                                 .WhenNoHandlerFound(HandleException)
                             )
                     )

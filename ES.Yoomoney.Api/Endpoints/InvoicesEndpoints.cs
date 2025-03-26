@@ -10,8 +10,8 @@ public sealed class InvoicesEndpoints: IHasEndpoints
 {
     public void MapEndpoints(IEndpointRouteBuilder builder)
     {
-        builder.MapPost("/invoices", CreateInvoice);
-        builder.MapGet("/invoices", GetInvoices);
+        builder.MapPost("/api/v1/invoices", CreateInvoice);
+        builder.MapGet("/api/v1/invoices", GetInvoices);
     }
 
     private async Task<IResult> CreateInvoice(

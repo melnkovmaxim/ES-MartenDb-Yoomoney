@@ -14,17 +14,17 @@ namespace ES.Yoomoney.Infrastructure.Clients
                     ReturnUrl = "http://localhost",
                     Enforce = true
                 },
-                PaymentMethodData = new PaymentMethod()
-                {
-                    Type = PaymentMethodType.BankCard,
-                    Card = new Card()
-                    {
-                        Number = "5555555555554444",
-                        ExpiryMonth = "01",
-                        ExpiryYear = "2029",
-                        Csc = "234"
-                    }
-                },
+                // PaymentMethodData = new PaymentMethod()
+                // {
+                //     Type = PaymentMethodType.BankCard,
+                //     Card = new Card()
+                //     {
+                //         Number = "5555555555554444",
+                //         ExpiryMonth = "01",
+                //         ExpiryYear = "2029",
+                //         Csc = "234"
+                //     }
+                // },
                 Amount = new Amount()
                 {
                     Currency = "RUB",
@@ -33,7 +33,7 @@ namespace ES.Yoomoney.Infrastructure.Clients
                 MerchantCustomerId = accountId.ToString(),
                 Capture = false
             };
-
+            
             var createdPayment = client.CreatePayment(newPayment);
             var result = (PaymentId: createdPayment.Id, createdPayment.Confirmation.ConfirmationUrl);
 

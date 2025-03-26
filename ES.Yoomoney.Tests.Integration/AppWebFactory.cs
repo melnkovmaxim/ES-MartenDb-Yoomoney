@@ -56,10 +56,10 @@ public sealed class AppWebFactory: WebApplicationFactory<Program>, IAsyncLifetim
                     .Build();
             });
             services.AddSingleton<ConcurrentQueue<InvoiceStatusChangedIntegrationEvent>>();
-            services.RemoveAll(typeof(OrderCreatedEventsConsumer));
-            services.AddScoped<OrderCreatedEventsConsumer>(sp =>
+            services.RemoveAll(typeof(InvoiceStatusChangedConsumer));
+            services.AddScoped<InvoiceStatusChangedConsumer>(sp =>
             {
-                var mock = new Mock<OrderCreatedEventsConsumer>();
+                var mock = new Mock<InvoiceStatusChangedConsumer>();
 
                 mock.Setup(m => m.Handle(It.IsAny<IMessageContext>(), It.IsAny<InvoiceStatusChangedIntegrationEvent>()))
                     .Callback<IMessageContext, InvoiceStatusChangedIntegrationEvent>((_, message) =>
