@@ -1,9 +1,10 @@
-using ES.Yoomoney.Core.Abstractions;
 using ES.Yoomoney.Core.IntegrationEvents;
+using ES.Yoomoney.Core.Resources;
 using ES.Yoomoney.Infrastructure.Messaging.Consumers;
 using ES.Yoomoney.Infrastructure.Messaging.Middlewares;
 using ES.Yoomoney.Infrastructure.Messaging.Producers;
 using KafkaFlow;
+using KafkaFlow.Configuration;
 using KafkaFlow.Serializer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,51 +15,56 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddInfrastructureMessagingLayer(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddSingleton<IKafkaProducer<PaymentAuthorizedIntegrationEvent>, PaymentAuthorizedEventsProducer>();
-        services.AddSingleton<IKafkaProducer<PaymentFailedIntegrationEvent>, PaymentFailedEventsProducer>();
         services.AddKafkaFlowHostedService(kafka => kafka
             .UseConsoleLog()
             .AddCluster(
                 cluster => cluster
                     .WithBrokers([configuration.GetConnectionString("kafka")])
                     .WithSecurityInformation(security => security.EnableSslCertificateVerification = false)
-                    .CreateTopicIfNotExists(PaymentAuthorizedEventsProducer.Topic, 1, 1)
-                    .CreateTopicIfNotExists(PaymentFailedEventsProducer.Topic, 1, 1)
-                    .CreateTopicIfNotExists(OrderCreatedEventsConsumer.Topic, 1, 1)
-                    .AddProducer<PaymentAuthorizedIntegrationEvent>(
-                        producer => producer
-                            .DefaultTopic(PaymentAuthorizedEventsProducer.Topic)
-                            .AddMiddlewares(m =>
-                                m.AddSerializer<JsonCoreSerializer>()
-                            )
-                    )
-                    .AddProducer<PaymentFailedIntegrationEvent>(
-                        producer => producer
-                            .DefaultTopic(PaymentFailedEventsProducer.Topic)
-                            .AddMiddlewares(m =>
-                                m.AddSerializer<JsonCoreSerializer>()
-                            )
-                    )
-                    .AddProducer<OrderCreatedIntegrationEvent>(p => p.DefaultTopic(OrderCreatedEventsConsumer.Topic).AddMiddlewares(m => m.AddSerializer<JsonCoreSerializer>()))
-                    .AddConsumer(
-                        consumer => consumer
-                            .Topic(OrderCreatedEventsConsumer.Topic)
-                            .WithGroupId("es-yoomoney-group")
-                            .WithBufferSize(100)
-                            .WithWorkersCount(3)
-                            .AddMiddlewares(
-                                middlewares => middlewares
-                                    .AddSingleTypeDeserializer<OrderCreatedIntegrationEvent, JsonCoreDeserializer>()
-                                    .Add<ErrorHandlingMiddleware>()
-                                    .AddTypedHandlers(handlers => handlers
-                                        .AddHandler<OrderCreatedEventsConsumer>()
-                                        .WhenNoHandlerFound(HandleException)
-                                    )
-                            )
-                    )
+                    .CreateTopics()
+                    .AddConsumers()
+                    .AddProducers()
             ));
 
         return services;
+    }
+
+    private static IClusterConfigurationBuilder CreateTopics(this IClusterConfigurationBuilder builder)
+    {
+        return builder.CreateTopicIfNotExists(
+            Resources.AppConstants.Topics.InvoiceStatusChanged, 1, 1);
+    }
+
+    private static IClusterConfigurationBuilder AddConsumers(this IClusterConfigurationBuilder builder)
+    {
+        return builder
+            .AddConsumer(
+                consumer => consumer
+                    .Topic(Resources.AppConstants.Topics.InvoiceStatusChanged)
+                    .WithGroupId(AppConstants.AppName)
+                    .WithBufferSize(100)
+                    .WithWorkersCount(3)
+                    .AddMiddlewares(
+                        middlewares => middlewares
+                            .AddSingleTypeDeserializer<InvoiceStatusChangedIntegrationEvent, JsonCoreDeserializer>()
+                            .Add<ErrorHandlingMiddleware>()
+                            .AddTypedHandlers(handlers => handlers
+                                .AddHandler<OrderCreatedEventsConsumer>()
+                                .WhenNoHandlerFound(HandleException)
+                            )
+                    )
+            );
+    }
+
+    private static IClusterConfigurationBuilder AddProducers(this IClusterConfigurationBuilder builder)
+    {
+        return builder.AddProducer<InvoiceStatusChangedIntegrationEvent>(
+            producer => producer
+                .DefaultTopic(Resources.AppConstants.Topics.InvoiceStatusChanged)
+                .AddMiddlewares(m =>
+                    m.AddSerializer<JsonCoreSerializer>()
+                )
+        );
     }
 
     private static void HandleException(IMessageContext context)

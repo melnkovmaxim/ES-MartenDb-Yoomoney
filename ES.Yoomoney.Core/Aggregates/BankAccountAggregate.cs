@@ -16,7 +16,7 @@ public sealed partial class BankAccountAggregate: Aggregate
     {
         var bankAccount = new BankAccountAggregate();
         var bankAccountId = accountId;
-        var @event = new Events.AccountBalanceInitializedTo(bankAccountId);
+        var @event = new DomainEvents.AccountBalanceInitializedTo(bankAccountId);
 
         bankAccount.Apply(@event);
         bankAccount.UncommittedEvents.Add(@event);
@@ -24,9 +24,27 @@ public sealed partial class BankAccountAggregate: Aggregate
         return bankAccount;
     }
 
-    public void Deposit(decimal amount)
+    public void CreateInvoice(Guid invoiceId, decimal amount)
     {
-        var @event = new Events.MoneyDepositedDomainEvent(Id, amount, PaymentSystemsEnum.Yoomoney, new Payment());
+        var @event = new DomainEvents.InvoiceCreatedDomainEvent(invoiceId, Id, amount);
+        
+        Apply(@event);
+        
+        UncommittedEvents.Add(@event);
+    }
+
+    public void Deposit(
+        Guid invoiceId, 
+        decimal amount, 
+        string currency,
+        Payment meta)
+    {
+        var @event = new DomainEvents.MoneyDepositedDomainEvent(
+            invoiceId, 
+            Id, 
+            amount, 
+            currency, 
+            meta);
         
         Apply(@event);
         
@@ -35,9 +53,10 @@ public sealed partial class BankAccountAggregate: Aggregate
 
     public void Withdrawn(decimal amount)
     {
-        var @event = new Events.MoneyWithdrawnDomainEvent(Id, amount);
+        var operationId = Guid.CreateVersion7();
+        var @event = new DomainEvents.MoneyWithdrawnDomainEvent(operationId, Id, amount);
         
-        Apply(new Events.MoneyWithdrawnDomainEvent(Id, amount));
+        Apply(@event);
         
         UncommittedEvents.Add(@event);
     }

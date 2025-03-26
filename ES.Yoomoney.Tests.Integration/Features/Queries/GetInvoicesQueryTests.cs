@@ -1,3 +1,4 @@
+using Bogus;
 using ES.Yoomoney.Core.Abstractions;
 using ES.Yoomoney.Core.Aggregates;
 using ES.Yoomoney.Core.Entities;
@@ -24,9 +25,18 @@ public class GetInvoicesQueryTests(AppWebFactory factory) : IClassFixture<AppWeb
         var bankAccount = BankAccountAggregate.Open(accountId);
         
         // Add some test events
-        bankAccount.Deposit(1000);
-        bankAccount.Deposit(2000);
-        bankAccount.Deposit(3000);
+        var firstInvoiceId = Guid.CreateVersion7();
+        var secondInvoiceId = Guid.CreateVersion7();
+        var thirdInvoiceId = Guid.CreateVersion7();
+        
+        var firstCurrency = new Faker().Random.String2(3);
+        var secondCurrency = new Faker().Random.String2(3);
+        var thirdCurrency = new Faker().Random.String2(3);
+        var meta = new Faker<Payment>().Generate();
+        
+        bankAccount.Deposit(firstInvoiceId, 1000, firstCurrency, meta);
+        bankAccount.Deposit(secondInvoiceId, 2000, secondCurrency, meta);
+        bankAccount.Deposit(thirdInvoiceId, 3000, thirdCurrency, meta);
         
         await _eventStore.StoreAsync(bankAccount, CancellationToken.None);
 
@@ -41,9 +51,17 @@ public class GetInvoicesQueryTests(AppWebFactory factory) : IClassFixture<AppWeb
         
         var invoices = response.Invoices.ToList();
         
+        invoices[0].InvoiceId.ShouldBe(firstInvoiceId);
+        invoices[1].InvoiceId.ShouldBe(secondInvoiceId);
+        invoices[2].InvoiceId.ShouldBe(thirdInvoiceId);
+        
         invoices[0].Amount.ShouldBe(1000);
         invoices[1].Amount.ShouldBe(2000);
         invoices[2].Amount.ShouldBe(3000);
+        
+        invoices[0].Currency.ShouldBe(firstCurrency);
+        invoices[1].Currency.ShouldBe(secondCurrency);
+        invoices[2].Currency.ShouldBe(thirdCurrency);
     }
 
     [Fact]
@@ -72,7 +90,10 @@ public class GetInvoicesQueryTests(AppWebFactory factory) : IClassFixture<AppWeb
         // Add 5 test events
         for (int i = 1; i <= 5; i++)
         {
-            bankAccount.Deposit(i * 1000);
+            var currency = new Faker().Random.String2(3);
+            var meta = new Faker<Payment>().Generate();
+            
+            bankAccount.Deposit(Guid.CreateVersion7(), i * 1000, currency, meta);
         }
         
         await _eventStore.StoreAsync(bankAccount, CancellationToken.None);

@@ -11,9 +11,14 @@ public static class ServiceCollectionExtensions
     {
         services.AddMarten(options =>
             {
-                options.Events.AddEventType<Events.MoneyDepositedDomainEvent>();
-                options.Events.AddEventType<Events.MoneyWithdrawnDomainEvent>();
-                options.Events.AddEventType<Events.AccountBalanceInitializedTo>();
+                // TODO: разобраться почему не работает Key / Unique Index
+                options.Schema.For<DomainEvents.Event>()
+                    .Identity(e => e.EventId)
+                    .UniqueIndex(e => e.EventId);
+                options.Events.EnableUniqueIndexOnEventId = true;
+                options.Events.AddEventType<DomainEvents.MoneyDepositedDomainEvent>();
+                options.Events.AddEventType<DomainEvents.MoneyWithdrawnDomainEvent>();
+                options.Events.AddEventType<DomainEvents.AccountBalanceInitializedTo>();
                 // options.Schema.For<BalanceProjection>().Identity(x => x.AccountId);
             })
             .UseNpgsqlDataSource();

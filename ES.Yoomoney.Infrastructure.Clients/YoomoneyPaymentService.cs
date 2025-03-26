@@ -5,7 +5,7 @@ namespace ES.Yoomoney.Infrastructure.Clients
 {
     public class YoomoneyPaymentService(Client client) : IPaymentService
     {
-        public Task<(string PaymentId, string ConfirmationUrl)> CreateInvoiceAsync(decimal amount)
+        public Task<(string PaymentId, string ConfirmationUrl)> CreateInvoiceAsync(Guid accountId, decimal amount)
         {
             var newPayment = new NewPayment()
             {
@@ -30,6 +30,7 @@ namespace ES.Yoomoney.Infrastructure.Clients
                     Currency = "RUB",
                     Value = amount
                 },
+                MerchantCustomerId = accountId.ToString(),
                 Capture = false
             };
 

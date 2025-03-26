@@ -29,9 +29,13 @@ public class GetInvoicesQueryTests
         var bankAccount = BankAccountAggregate.Open(accountId);
         
         // Add some test events
-        bankAccount.Deposit(1000);
-        bankAccount.Deposit(2000);
-        bankAccount.Deposit(3000);
+        var firstInvoiceId = Guid.CreateVersion7();
+        var secondInvoiceId = Guid.CreateVersion7();
+        var thirdInvoiceId = Guid.CreateVersion7();
+        
+        bankAccount.Deposit(firstInvoiceId, 1000, "RUR", new Payment());
+        bankAccount.Deposit(secondInvoiceId, 2000, "EUR", new Payment());
+        bankAccount.Deposit(thirdInvoiceId, 3000, "UAH", new Payment());
         
         _eventStoreMock
             .Setup(x => x.LoadAsync<BankAccountAggregate>(accountId, null, It.IsAny<CancellationToken>()))
@@ -48,9 +52,18 @@ public class GetInvoicesQueryTests
         response.Invoices.Count.ShouldBe(3);
         
         var invoices = response.Invoices.ToList();
+        
+        invoices[0].InvoiceId.ShouldBe(firstInvoiceId);
+        invoices[1].InvoiceId.ShouldBe(secondInvoiceId);
+        invoices[2].InvoiceId.ShouldBe(thirdInvoiceId);
+        
         invoices[0].Amount.ShouldBe(1000);
         invoices[1].Amount.ShouldBe(2000);
         invoices[2].Amount.ShouldBe(3000);
+        
+        invoices[0].Currency.ShouldBe("RUR");
+        invoices[1].Currency.ShouldBe("EUR");
+        invoices[2].Currency.ShouldBe("UAH");
     }
 
     [Fact]
@@ -62,7 +75,7 @@ public class GetInvoicesQueryTests
 
         _eventStoreMock
             .Setup(x => x.LoadAsync<BankAccountAggregate>(accountId, null, It.IsAny<CancellationToken>()))
-            .ReturnsAsync((BankAccountAggregate)null);
+            .ReturnsAsync((BankAccountAggregate)null!);
 
         // Act
         var response = await _handler.Handle(request, CancellationToken.None);
@@ -83,7 +96,7 @@ public class GetInvoicesQueryTests
         // Add 5 test events
         for (int i = 1; i <= 5; i++)
         {
-            bankAccount.Deposit(i * 1000);
+            bankAccount.Deposit(Guid.CreateVersion7(), i * 1000, "RUR", new Payment());
         }
         
         _eventStoreMock

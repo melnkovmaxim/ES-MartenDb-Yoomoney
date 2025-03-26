@@ -10,7 +10,7 @@ public static class GetInvoicesQuery
 {
     public sealed record Request(Guid AccountId, int Page = 1, int PageSize = 10) : IRequest<Response>;
 
-    public sealed record Response(IReadOnlyCollection<Events.MoneyDepositedDomainEvent> Invoices, int TotalCount);
+    public sealed record Response(IReadOnlyCollection<DomainEvents.MoneyDepositedDomainEvent> Invoices, int TotalCount);
 
     public sealed class Handler(IEsEventStore eventStore) : IRequestHandler<Request, Response>
     {
@@ -25,7 +25,7 @@ public static class GetInvoicesQuery
 
             var events = bankAccount
                 .GetCommittedEvents()
-                .OfType<Events.MoneyDepositedDomainEvent>()
+                .OfType<DomainEvents.MoneyDepositedDomainEvent>()
                 .ToArray();
 
             var paymentEvents = events

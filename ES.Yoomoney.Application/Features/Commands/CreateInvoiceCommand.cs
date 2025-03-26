@@ -17,12 +17,15 @@ public static class CreateInvoiceCommand
     {
         public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
         {
-            var payment = await paymentService.CreateInvoiceAsync(request.Amount);
-            var bankAccount = await eventStore.LoadAsync<BankAccountAggregate>(request.AccountId, version: null, cancellationToken) 
-                              ?? BankAccountAggregate.Open(request.AccountId);
-
-            bankAccount.Deposit(request.Amount);
+            var payment = await paymentService
+                .CreateInvoiceAsync(request.AccountId, request.Amount);
+            var bankAccount =
+                await eventStore.LoadAsync<BankAccountAggregate>(request.AccountId, version: null, cancellationToken)
+                ?? BankAccountAggregate.Open(request.AccountId);
+            var paymentId = Guid.Parse(payment.PaymentId);
             
+            bankAccount.CreateInvoice(paymentId, request.Amount);
+
             await eventStore.StoreAsync(bankAccount, cancellationToken);
 
             return new Response(payment.PaymentId, payment.ConfirmationUrl);

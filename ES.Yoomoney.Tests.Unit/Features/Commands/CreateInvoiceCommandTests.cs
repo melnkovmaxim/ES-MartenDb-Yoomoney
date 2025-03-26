@@ -37,7 +37,7 @@ public class CreateInvoiceCommandTests
         var bankAccount = BankAccountAggregate.Open(accountId);
 
         _paymentServiceMock
-            .Setup(x => x.CreateInvoiceAsync(amount))
+            .Setup(x => x.CreateInvoiceAsync(bankAccount.Id, amount))
             .ReturnsAsync(payment);
 
         _eventStoreMock
@@ -52,9 +52,9 @@ public class CreateInvoiceCommandTests
         result.PaymentId.ShouldBe(paymentId);
         result.ConfirmationUrl.ShouldBe(confirmationUrl);
         
-        _paymentServiceMock.Verify(x => x.CreateInvoiceAsync(amount), Times.Once);
+        _paymentServiceMock.Verify(x => x.CreateInvoiceAsync(bankAccount.Id, amount), Times.Once);
         _eventStoreMock.Verify(x => x.LoadAsync<BankAccountAggregate>(accountId, null, It.IsAny<CancellationToken>()), Times.Once);
-        _eventStoreMock.Verify(x => x.StoreAsync(It.Is<BankAccountAggregate>(a => a.Balance == amount), It.IsAny<CancellationToken>()), Times.Once);
+        _eventStoreMock.Verify(x => x.StoreAsync(It.Is<BankAccountAggregate>(a => a.Balance == 0), It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
@@ -70,12 +70,12 @@ public class CreateInvoiceCommandTests
         var payment = (PaymentId: paymentId, ConfirmationUrl: confirmationUrl);
 
         _paymentServiceMock
-            .Setup(x => x.CreateInvoiceAsync(amount))
+            .Setup(x => x.CreateInvoiceAsync(accountId, amount))
             .ReturnsAsync(payment);
 
         _eventStoreMock
             .Setup(x => x.LoadAsync<BankAccountAggregate>(accountId, null, It.IsAny<CancellationToken>()))
-            .ReturnsAsync((BankAccountAggregate)null);
+            .ReturnsAsync((BankAccountAggregate)null!);
 
         // Act
         var result = await _handler.Handle(request, CancellationToken.None);
@@ -85,6 +85,6 @@ public class CreateInvoiceCommandTests
         result.PaymentId.ShouldBe(paymentId);
         result.ConfirmationUrl.ShouldBe(confirmationUrl);
         
-        _eventStoreMock.Verify(x => x.StoreAsync(It.Is<BankAccountAggregate>(a => a.Balance == amount), It.IsAny<CancellationToken>()), Times.Once);
+        _eventStoreMock.Verify(x => x.StoreAsync(It.Is<BankAccountAggregate>(a => a.Balance == 0), It.IsAny<CancellationToken>()), Times.Once);
     }
 } 

@@ -55,16 +55,16 @@ public sealed class AppWebFactory: WebApplicationFactory<Program>, IAsyncLifetim
                 return new ProducerBuilder<string, string>(producerConfig)
                     .Build();
             });
-            services.AddSingleton<ConcurrentQueue<OrderCreatedIntegrationEvent>>();
+            services.AddSingleton<ConcurrentQueue<InvoiceStatusChangedIntegrationEvent>>();
             services.RemoveAll(typeof(OrderCreatedEventsConsumer));
             services.AddScoped<OrderCreatedEventsConsumer>(sp =>
             {
                 var mock = new Mock<OrderCreatedEventsConsumer>();
 
-                mock.Setup(m => m.Handle(It.IsAny<IMessageContext>(), It.IsAny<OrderCreatedIntegrationEvent>()))
-                    .Callback<IMessageContext, OrderCreatedIntegrationEvent>((_, message) =>
+                mock.Setup(m => m.Handle(It.IsAny<IMessageContext>(), It.IsAny<InvoiceStatusChangedIntegrationEvent>()))
+                    .Callback<IMessageContext, InvoiceStatusChangedIntegrationEvent>((_, message) =>
                     {
-                        var queue = sp.GetRequiredService<ConcurrentQueue<OrderCreatedIntegrationEvent>>();
+                        var queue = sp.GetRequiredService<ConcurrentQueue<InvoiceStatusChangedIntegrationEvent>>();
                         
                         queue.Enqueue(message);
                     })

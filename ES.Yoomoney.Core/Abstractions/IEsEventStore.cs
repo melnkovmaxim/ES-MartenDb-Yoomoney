@@ -6,6 +6,8 @@ namespace ES.Yoomoney.Core.Abstractions;
 
 public interface IEsEventStore
 {
+    Task<bool> ExistsAsync(Guid eventId, CancellationToken ct);
+    
     Task StoreAsync(Aggregate aggregate, CancellationToken ct);
 
     Task<T?> LoadAsync<T>(

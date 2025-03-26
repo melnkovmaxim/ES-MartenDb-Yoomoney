@@ -1,23 +1,21 @@
 using System.Text.Json;
 using Confluent.Kafka;
+using ES.Yoomoney.Application.Features.Commands;
+using ES.Yoomoney.Application.Features.Events;
+using ES.Yoomoney.Core.Abstractions;
+using ES.Yoomoney.Core.Aggregates;
 using ES.Yoomoney.Core.IntegrationEvents;
 using KafkaFlow;
 using MediatR;
+using Yandex.Checkout.V3;
 
 namespace ES.Yoomoney.Infrastructure.Messaging.Consumers;
 
-public sealed class OrderCreatedEventsConsumer: IMessageHandler<OrderCreatedIntegrationEvent>
+public sealed class OrderCreatedEventsConsumer(IPublisher mediator)
+    : IMessageHandler<InvoiceStatusChangedIntegrationEvent>
 {
-    public const string Topic = nameof(OrderCreatedIntegrationEvent);
-
-    public OrderCreatedEventsConsumer()
+    public async Task Handle(IMessageContext context, InvoiceStatusChangedIntegrationEvent message)
     {
-        
-    }
-    
-    public async Task Handle(IMessageContext context, OrderCreatedIntegrationEvent message)
-    {
-        Console.WriteLine(JsonSerializer.Serialize(message));
-        // await publisher.Publish(message);
+        await mediator.Publish(message);
     }
 }

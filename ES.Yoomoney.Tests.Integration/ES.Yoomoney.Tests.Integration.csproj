@@ -9,6 +9,7 @@
 
     <ItemGroup>
         <PackageReference Include="Aspire.Confluent.Kafka" Version="9.0.0" />
+        <PackageReference Include="Bogus" Version="35.6.2" />
         <PackageReference Include="Confluent.Kafka.Core.Serialization.JsonCore" Version="1.0.1" />
         <PackageReference Include="coverlet.collector" Version="6.0.2"/>
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.0" />
@@ -26,7 +27,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ES.Yoomoney.AdminPanel\ES.Yoomoney.AdminPanel\ES.Yoomoney.AdminPanel.csproj" />
       <ProjectReference Include="..\ES.Yoomoney.Api\ES.Yoomoney.Api.csproj" />
     </ItemGroup>
 

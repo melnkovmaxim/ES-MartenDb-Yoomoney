@@ -4,10 +4,10 @@ public abstract class Aggregate
 {
     public Guid Id { get; protected set; }
     public int Version { get; private set; }
-    protected List<Events.Event> UncommittedEvents { get; } = [];
-    protected List<Events.Event> CommittedEvents { get; } = [];
+    protected HashSet<DomainEvents.Event> UncommittedEvents { get; } = [];
+    protected HashSet<DomainEvents.Event> TotalEvents { get; } = [];
 
-    public IReadOnlyCollection<Events.Event> GetUncommittedEvents()
+    public IReadOnlyCollection<DomainEvents.Event> GetUncommittedEvents()
     {
         var uncommittedEvents = UncommittedEvents.ToArray();
         
@@ -16,9 +16,9 @@ public abstract class Aggregate
         return uncommittedEvents;
     }
 
-    public IReadOnlyCollection<Events.Event> GetCommittedEvents()
+    public IReadOnlyCollection<DomainEvents.Event> GetCommittedEvents()
     {
-        return CommittedEvents;
+        return TotalEvents;
     }
 
     protected void IncreaseVersion()
