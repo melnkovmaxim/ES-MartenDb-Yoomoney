@@ -1,4 +1,4 @@
-using ES.Yoomoney.Common.Core.OperationResult;
+using ES.Yoomoney.Common.Core.FunctionalResult;
 
 namespace ES.Yoomoney.Tests.Unit.Core.OperationResult;
 

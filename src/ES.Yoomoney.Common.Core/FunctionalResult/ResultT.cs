@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace ES.Yoomoney.Common.Core.OperationResult;
+namespace ES.Yoomoney.Common.Core.FunctionalResult;
 
 public class Result<TValue> : Result
 {

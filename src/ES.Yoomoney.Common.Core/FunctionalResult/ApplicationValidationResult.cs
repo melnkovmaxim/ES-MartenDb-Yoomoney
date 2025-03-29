@@ -1,4 +1,4 @@
-﻿namespace ES.Yoomoney.Common.Core.OperationResult;
+﻿namespace ES.Yoomoney.Common.Core.FunctionalResult;
 
 public sealed class ApplicationValidationResult : Result
 {
