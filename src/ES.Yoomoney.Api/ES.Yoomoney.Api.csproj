@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <ItemGroup>
+        <PackageReference Include="Aspire.Npgsql"/>
+        <PackageReference Include="Marten"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting"/>
+        <PackageReference Include="Scalar.AspNetCore"/>
+        <PackageReference Include="Scrutor"/>
+        <PackageReference Include="Yandex.Checkout.V3"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\ES.Yoomoney.ServiceDefaults\ES.Yoomoney.ServiceDefaults.csproj" />
+        <ProjectReference Include="..\ES.Yoomoney.Application\ES.Yoomoney.Application.csproj"/>
+        <ProjectReference Include="..\ES.Yoomoney.Common.Presentation\ES.Yoomoney.Common.Presentation.csproj"/>
+        <ProjectReference Include="..\ES.Yoomoney.Core\ES.Yoomoney.Core.csproj"/>
+        <ProjectReference Include="..\ES.Yoomoney.Infrastructure.Clients\ES.Yoomoney.Infrastructure.Clients.csproj"/>
+        <ProjectReference Include="..\ES.Yoomoney.Infrastructure.Messaging\ES.Yoomoney.Infrastructure.Messaging.csproj"/>
+        <ProjectReference Include="..\ES.Yoomoney.Infrastructure.Persistence.EventSourcing\ES.Yoomoney.Infrastructure.Persistence.EventSourcing.csproj"/>
+        <ProjectReference Include="..\ES.Yoomoney.Infrastructure.Persistence.PostgreSql\ES.Yoomoney.Infrastructure.Persistence.PostgreSql.csproj"/>
+        <ProjectReference Include="..\ES.Yoomoney.Infrastructure.Workers\ES.Yoomoney.Infrastructure.Workers.csproj"/>
+    </ItemGroup>
+
+</Project>

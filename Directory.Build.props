@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>latest</LangVersion>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+
+        <AnalysisLevel>latest</AnalysisLevel>
+        <AnalysisMode>All</AnalysisMode>
+
+        <InternalsVisibleTo>ES.Yoomoney.Tests.Unit</InternalsVisibleTo>
+        <InternalsVisibleTo>ES.Yoomoney.Tests.Integration</InternalsVisibleTo>
+    </PropertyGroup>
+
+
+    <ItemGroup>
+        <PackageReference
+                Include="SonarAnalyzer.CSharp"
+                Version="10.7.0.110445"
+                PrivateAssets="All"
+                Condition="$(MSBuildProjectExtensions) == '.csproj'"
+        />
+    </ItemGroup>
+</Project> 

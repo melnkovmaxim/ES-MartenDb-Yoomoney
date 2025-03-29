@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+        <PackageReference Include="MediatR.Contracts"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions"/>
+        <PackageReference Include="Microsoft.Extensions.Options"/>
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions"/>
+        <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations"/>
+        <PackageReference Include="Yandex.Checkout.V3"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="Aggregates\BankAccountAggregate.Appliers.cs">
+            <DependentUpon>BankAccountAggregate.cs</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\ES.Yoomoney.Common.Core\ES.Yoomoney.Common.Core.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Exceptions\"/>
+    </ItemGroup>
+
+</Project>

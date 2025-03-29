@@ -1,30 +1,50 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Api", "ES.Yoomoney.Api\ES.Yoomoney.Api.csproj", "{3FBF453E-AD83-4141-A19E-BB4335C59067}"
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Api", "src\ES.Yoomoney.Api\ES.Yoomoney.Api.csproj", "{3FBF453E-AD83-4141-A19E-BB4335C59067}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Application", "ES.Yoomoney.Application\ES.Yoomoney.Application.csproj", "{66D620EB-9EAF-4039-9614-5AE2C54FDA52}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Application", "src\ES.Yoomoney.Application\ES.Yoomoney.Application.csproj", "{66D620EB-9EAF-4039-9614-5AE2C54FDA52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Core", "ES.Yoomoney.Core\ES.Yoomoney.Core.csproj", "{B29541C5-2AB7-485E-B95D-E09FB47A3B3E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Core", "src\ES.Yoomoney.Core\ES.Yoomoney.Core.csproj", "{B29541C5-2AB7-485E-B95D-E09FB47A3B3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Infrastructure.Messaging", "ES.Yoomoney.Infrastructure.Messaging\ES.Yoomoney.Infrastructure.Messaging.csproj", "{9561AD15-3C70-47F2-B07F-74141C844159}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Infrastructure.Messaging", "src\ES.Yoomoney.Infrastructure.Messaging\ES.Yoomoney.Infrastructure.Messaging.csproj", "{9561AD15-3C70-47F2-B07F-74141C844159}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Infrastructure.Persistence.EventSourcing", "ES.Yoomoney.Infrastructure.Persistence.EventSourcing\ES.Yoomoney.Infrastructure.Persistence.EventSourcing.csproj", "{43D51FC1-A22F-453E-A3B4-8B9F2E0DEBCA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Infrastructure.Persistence.EventSourcing", "src\ES.Yoomoney.Infrastructure.Persistence.EventSourcing\ES.Yoomoney.Infrastructure.Persistence.EventSourcing.csproj", "{43D51FC1-A22F-453E-A3B4-8B9F2E0DEBCA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{B634CB2C-FDEC-44CB-8E6A-F99EB08C5D9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Infrastructure.Workers", "ES.Yoomoney.Infrastructure.Workers\ES.Yoomoney.Infrastructure.Workers.csproj", "{A22971AA-623F-419A-B5D1-6D0C9217D013}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Infrastructure.Workers", "src\ES.Yoomoney.Infrastructure.Workers\ES.Yoomoney.Infrastructure.Workers.csproj", "{A22971AA-623F-419A-B5D1-6D0C9217D013}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6B41DB89-4764-427C-89A5-90F793924442}"
+	ProjectSection(SolutionItems) = preProject
+		tests\.editorconfig = tests\.editorconfig
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Tests.Unit", "ES.Yoomoney.Tests.Unit\ES.Yoomoney.Tests.Unit.csproj", "{37E62BCD-D199-49F5-AD28-D03E9A8BE47F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Tests.Unit", "tests\ES.Yoomoney.Tests.Unit\ES.Yoomoney.Tests.Unit.csproj", "{37E62BCD-D199-49F5-AD28-D03E9A8BE47F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Tests.Integration", "ES.Yoomoney.Tests.Integration\ES.Yoomoney.Tests.Integration.csproj", "{4CCF9CC0-CBB9-4D66-997B-F6FDE42CE178}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Tests.Integration", "tests\ES.Yoomoney.Tests.Integration\ES.Yoomoney.Tests.Integration.csproj", "{4CCF9CC0-CBB9-4D66-997B-F6FDE42CE178}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Infrastructure.Clients", "ES.Yoomoney.Infrastructure.Clients\ES.Yoomoney.Infrastructure.Clients.csproj", "{CDDD09C2-403B-4376-8DB7-20D3ADE41386}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Infrastructure.Clients", "src\ES.Yoomoney.Infrastructure.Clients\ES.Yoomoney.Infrastructure.Clients.csproj", "{CDDD09C2-403B-4376-8DB7-20D3ADE41386}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Infrastructure.Persistence.PostgreSql", "ES.Yoomoney.Infrastructure.Persistence.PostgreSql\ES.Yoomoney.Infrastructure.Persistence.PostgreSql.csproj", "{7BAF63FF-1B14-47D6-9881-8FACAD1C30A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Infrastructure.Persistence.PostgreSql", "src\ES.Yoomoney.Infrastructure.Persistence.PostgreSql\ES.Yoomoney.Infrastructure.Persistence.PostgreSql.csproj", "{7BAF63FF-1B14-47D6-9881-8FACAD1C30A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Host", "ES.Yoomoney.Host\ES.Yoomoney.Host.csproj", "{164515F5-B0AA-4F4E-AC2E-DA0656097686}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Host", "src\ES.Yoomoney.Host\ES.Yoomoney.Host.csproj", "{164515F5-B0AA-4F4E-AC2E-DA0656097686}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D0A19FB0-73F8-44F0-B49C-259F06B9E3F9}"
+	ProjectSection(SolutionItems) = preProject
+		readme.md = readme.md
+		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{931157FA-402D-4CA6-B6F7-0146746BCBFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Common.Application", "src\ES.Yoomoney.Common.Application\ES.Yoomoney.Common.Application.csproj", "{2850A540-F22C-48E2-A4BD-2A597000F6A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Common.Core", "src\ES.Yoomoney.Common.Core\ES.Yoomoney.Common.Core.csproj", "{7332CCF0-9ECA-47F5-810C-B5FDA572843A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.Common.Presentation", "src\ES.Yoomoney.Common.Presentation\ES.Yoomoney.Common.Presentation.csproj", "{8E50AC38-C8CE-4BD1-84BF-C3F82641B352}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.Yoomoney.ServiceDefaults", "ES.Yoomoney.ServiceDefaults\ES.Yoomoney.ServiceDefaults.csproj", "{55862D47-38B7-4834-85E4-D7659D553569}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -76,6 +96,22 @@ Global
 		{164515F5-B0AA-4F4E-AC2E-DA0656097686}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{164515F5-B0AA-4F4E-AC2E-DA0656097686}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{164515F5-B0AA-4F4E-AC2E-DA0656097686}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2850A540-F22C-48E2-A4BD-2A597000F6A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2850A540-F22C-48E2-A4BD-2A597000F6A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2850A540-F22C-48E2-A4BD-2A597000F6A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2850A540-F22C-48E2-A4BD-2A597000F6A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7332CCF0-9ECA-47F5-810C-B5FDA572843A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7332CCF0-9ECA-47F5-810C-B5FDA572843A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7332CCF0-9ECA-47F5-810C-B5FDA572843A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7332CCF0-9ECA-47F5-810C-B5FDA572843A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E50AC38-C8CE-4BD1-84BF-C3F82641B352}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E50AC38-C8CE-4BD1-84BF-C3F82641B352}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E50AC38-C8CE-4BD1-84BF-C3F82641B352}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E50AC38-C8CE-4BD1-84BF-C3F82641B352}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55862D47-38B7-4834-85E4-D7659D553569}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55862D47-38B7-4834-85E4-D7659D553569}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55862D47-38B7-4834-85E4-D7659D553569}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55862D47-38B7-4834-85E4-D7659D553569}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9561AD15-3C70-47F2-B07F-74141C844159} = {B634CB2C-FDEC-44CB-8E6A-F99EB08C5D9E}
@@ -85,5 +121,8 @@ Global
 		{4CCF9CC0-CBB9-4D66-997B-F6FDE42CE178} = {6B41DB89-4764-427C-89A5-90F793924442}
 		{CDDD09C2-403B-4376-8DB7-20D3ADE41386} = {B634CB2C-FDEC-44CB-8E6A-F99EB08C5D9E}
 		{7BAF63FF-1B14-47D6-9881-8FACAD1C30A6} = {B634CB2C-FDEC-44CB-8E6A-F99EB08C5D9E}
+		{2850A540-F22C-48E2-A4BD-2A597000F6A2} = {931157FA-402D-4CA6-B6F7-0146746BCBFE}
+		{7332CCF0-9ECA-47F5-810C-B5FDA572843A} = {931157FA-402D-4CA6-B6F7-0146746BCBFE}
+		{8E50AC38-C8CE-4BD1-84BF-C3F82641B352} = {931157FA-402D-4CA6-B6F7-0146746BCBFE}
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\ES.Yoomoney.Api\ES.Yoomoney.Api.csproj" />
+        <ProjectReference Include="..\..\ES.Yoomoney.Application\ES.Yoomoney.Application.csproj" />
+        <ProjectReference Include="..\..\ES.Yoomoney.Core\ES.Yoomoney.Core.csproj" />
+        <ProjectReference Include="..\..\ES.Yoomoney.Infrastructure.Clients\ES.Yoomoney.Infrastructure.Clients.csproj" />
+        <ProjectReference Include="..\..\ES.Yoomoney.Infrastructure.Messaging\ES.Yoomoney.Infrastructure.Messaging.csproj" />
+        <ProjectReference Include="..\..\ES.Yoomoney.Infrastructure.Persistence.EventSourcing\ES.Yoomoney.Infrastructure.Persistence.EventSourcing.csproj" />
+        <ProjectReference Include="..\..\ES.Yoomoney.Infrastructure.Persistence.PostgreSql\ES.Yoomoney.Infrastructure.Persistence.PostgreSql.csproj" />
+        <ProjectReference Include="..\..\ES.Yoomoney.Infrastructure.Workers\ES.Yoomoney.Infrastructure.Workers.csproj" />
+        <ProjectReference Include="..\ES.Yoomoney.AdminPanel.Client\ES.Yoomoney.AdminPanel.Client.csproj"/>
+        <PackageReference Include="Aspire.Confluent.Kafka" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" />
+    </ItemGroup>
+
+</Project>

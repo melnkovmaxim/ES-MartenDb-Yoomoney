@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+        <ProjectReference Include="..\ES.Yoomoney.Application\ES.Yoomoney.Application.csproj"/>
+        <ProjectReference Include="..\ES.Yoomoney.Core\ES.Yoomoney.Core.csproj"/>
+    </ItemGroup>
+
+</Project>

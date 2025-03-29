@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+        <PackageReference Include="FluentValidation"/>
+        <PackageReference Include="MediatR"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Mediator\Behaviors\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\ES.Yoomoney.Common.Core\ES.Yoomoney.Common.Core.csproj"/>
+    </ItemGroup>
+
+</Project>

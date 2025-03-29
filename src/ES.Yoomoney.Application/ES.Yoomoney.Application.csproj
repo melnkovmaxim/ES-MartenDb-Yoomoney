@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+        <ProjectReference Include="..\ES.Yoomoney.Common.Application\ES.Yoomoney.Common.Application.csproj"/>
+        <ProjectReference Include="..\ES.Yoomoney.Core\ES.Yoomoney.Core.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FluentValidation"/>
+        <PackageReference Include="KafkaFlow.Abstractions"/>
+        <PackageReference Include="MediatR"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Features\Queries\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="Features\Commands\CreateInvoiceCommand.Log.cs">
+            <DependentUpon>CreateInvoiceCommand.cs</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+</Project>

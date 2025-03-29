@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+        <ProjectReference Include="..\ES.Yoomoney.Application\ES.Yoomoney.Application.csproj"/>
+        <ProjectReference Include="..\ES.Yoomoney.Core\ES.Yoomoney.Core.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="KafkaFlow"/>
+        <PackageReference Include="KafkaFlow.Extensions.Hosting"/>
+        <PackageReference Include="KafkaFlow.LogHandler.Console"/>
+        <PackageReference Include="KafkaFlow.Microsoft.DependencyInjection"/>
+        <PackageReference Include="KafkaFlow.Serializer.JsonCore"/>
+        <PackageReference Include="KafkaFlow.Serializer.NewtonsoftJson"/>
+        <PackageReference Include="KafkaFlow.Serializer.ProtobufNet"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions"/>
+        <PackageReference Include="Newtonsoft.Json"/>
+        <PackageReference Include="Testcontainers.Kafka"/>
+    </ItemGroup>
+
+</Project>
